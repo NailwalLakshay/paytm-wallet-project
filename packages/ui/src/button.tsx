@@ -13,9 +13,9 @@ export const Button = ({ children, className , fxn}: ButtonProps) => {
   return (
     <button
       className={`${className}`}
-      onClick={() => {
-        if(fxn === "signin") signIn()
-        else signOut()
+      onClick={async () => {
+        if(fxn === "signin") await signIn();
+        else if(fxn === "logout") await signOut();
       }}
     >
       {children}

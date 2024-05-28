@@ -25,7 +25,7 @@ export const authOptions = ({
 
                 if(existingUser){
 
-                    if(! await bcrypt.compare(credentials.password , existingUser.password)){
+                    if(!await bcrypt.compare(credentials.password , existingUser.password)){
                         return null;
                     }
                     else{
@@ -42,7 +42,16 @@ export const authOptions = ({
                             email : credentials.email,
                             password : hashedPassword
                         }
-                    });
+                    }) || 0;
+
+                    const newBalanceEntry = newUser && await prisma.balance.create({
+                        data : {
+                            amount : 0,
+                            locked : 0,
+                            decimal : 1,
+                            userId : newUser.id
+                        }
+                    })
     
                     return {
                         id : newUser.id.toString(),
@@ -66,7 +75,10 @@ export const authOptions = ({
             session.user.id = token.sub;
             return session;
         },
-        
+        async redirect({url , baseUrl} : any){
+            return baseUrl;
+        }
+          
     },
     secret : process.env.NEXTAUTH_SECRECT!
 

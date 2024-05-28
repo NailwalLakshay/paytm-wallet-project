@@ -1,12 +1,19 @@
-import { Button } from "@repo/ui/button";
-import { AppBar } from "@repo/ui/appbar";
+import { authOptions } from "@repo/authoptions/auth"
+import { getServerSession } from "next-auth"
+import { redirect } from "next/navigation";
 
-export default function Page(): JSX.Element{
+export default async function Page() {
+
+  const session = await getServerSession(authOptions);
+  if(session?.user){
+    redirect("/dashboard")
+  }
+
   return (
-    <div>
-
-        <AppBar/>
-      
+    <div className="p-10">
+        <div className="text-3xl font-bold">
+          PayTM@IIT Landing Page
+        </div>
     </div>
   )
 }

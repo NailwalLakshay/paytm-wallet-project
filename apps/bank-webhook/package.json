@@ -4,13 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js && node dist/index.js",
+    "dev" : "ts-node src/index.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@repo/db": "*",
     "@types/express": "^4.17.21",
-    "@repo/db" : "*"
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "esbuild": "0.21.4"
   }
 }

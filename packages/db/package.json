@@ -12,6 +12,9 @@
   "exports": {
     "./client": "./src/index.ts"
   },
+  "prisma" : {
+    "seed" : "ts-node prisma/seed.ts"
+  },
   "devDependencies": {
     "prisma": "^5.14.0"
   },
