@@ -12,13 +12,15 @@
   "exports": {
     "./client": "./src/index.ts"
   },
-  "prisma" : {
-    "seed" : "ts-node prisma/seed.ts"
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "devDependencies": {
     "prisma": "^5.14.0"
   },
   "dependencies": {
-    "@prisma/client": "^5.14.0"
+    "@prisma/client": "^5.14.0",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1"
   }
 }
