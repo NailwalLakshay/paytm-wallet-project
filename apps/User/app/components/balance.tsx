@@ -1,7 +1,6 @@
-export const Balance = ({amount , locked , decimal} : {
+export const Balance = ({amount , locked } : {
     amount : number,
     locked : number,
-    decimal : number
 })=>{
     return(
         <div>
@@ -11,7 +10,7 @@ export const Balance = ({amount , locked , decimal} : {
                     Unlocked Balance
                 </h1>
                 <div>
-                    {amount / decimal} INR
+                    {amount } INR
                 </div>
             </div>
             <div className="flex  justify-between border-b mb-2">
@@ -19,7 +18,7 @@ export const Balance = ({amount , locked , decimal} : {
                     Locked Balance
                 </h1>
                 <div>
-                    {locked / decimal} INR
+                    {locked } INR
                 </div>
             </div>
             <div className="flex  justify-between border-b mb-2">
@@ -27,7 +26,7 @@ export const Balance = ({amount , locked , decimal} : {
                     Total Balance
                 </h1>
                 <div>
-                    {(amount + locked) / decimal} INR
+                    {(amount + locked) } INR
                 </div>
             </div>
             

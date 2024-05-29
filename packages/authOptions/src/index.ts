@@ -48,7 +48,6 @@ export const authOptions = ({
                         data : {
                             amount : 0,
                             locked : 0,
-                            decimal : 1,
                             userId : newUser.id
                         }
                     })
