@@ -14,7 +14,6 @@ async function main() {
           StartTime: new Date(),
           Status: "SUCCESS",
           amount: 20100,
-          decimal : 1,
           token: "1222",
           Provider: "HDFC Bank",
         },
@@ -22,7 +21,6 @@ async function main() {
       Balance: {
         create : {
            amount : 20100,
-           decimal : 1,
            locked : 0, 
         }
       }
@@ -38,7 +36,6 @@ async function main() {
         create: {
           StartTime: new Date(),
           Status: "FAILED",
-          decimal: 1,
           amount: 2000,
           token: "1223",
           Provider: "HDFC Bank",
@@ -48,7 +45,6 @@ async function main() {
         create : {
             amount : 0,
             locked : 0,
-            decimal : 1
         }
       }
     },

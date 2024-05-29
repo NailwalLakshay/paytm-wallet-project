@@ -25,21 +25,26 @@ export default async function(){
     })
 
     const transaction = await prisma.onRampTransaction.findMany({
+        take : 10,
         where : {
-            userId : Number(session.user.id)
+            userId : parseInt(session.user.id),
+            Status : "PENDING"
         },
         select : {
             StartTime : true,
             amount : true,
             Status : true,
             Provider : true
+        },
+        orderBy : {
+            StartTime : "desc"
         }
     })
 
     return(
         <div className="p-4 w-full flex flex-col gap-10">
             <div className="font-bold text-4xl mt-10 text-purple-500">
-                <h1>Tranfser</h1>
+                <h1>PayTM@IIT WALLET</h1>
             </div>          
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                 <div >
@@ -54,9 +59,9 @@ export default async function(){
                         </Card>   
                     </div>    
                     <div>
-                    <Card title="Recent Transaction">
-                            <Transaction transaction={transaction} />    
-                        </Card>      
+                    <Card title="Pending Transaction">
+                        <Transaction classname="h-[200px] overflow-y-scroll overflow-x-hidden" label={"No Pending Transaction"} transaction={transaction} />    
+                    </Card>      
                     </div>    
                 </div>    
             </div>  

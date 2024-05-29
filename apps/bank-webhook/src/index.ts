@@ -7,7 +7,8 @@ const app = express();
 app.use(express.json());
 
 app.post("/", async (req,res)=>{
-    console.log(req.body)
+
+    // console.log(req.body)
     const paymentInformation : {
         token : string,
         userId : string,
@@ -64,15 +65,14 @@ app.post("/", async (req,res)=>{
     })
 
     } catch (error) {
-        await prisma.onRampTransaction.update({
-            where : {
-                token : paymentInformation.token
-            },
-            data : {
-                Status : "FAILED"
-            }
-        })
-
+        // await prisma.onRampTransaction.update({
+        //     where : {
+        //         token : paymentInformation.token
+        //     },
+        //     data : {
+        //         Status : "FAILED"
+        //     }
+        // })
         res.status(411).json( { 
             message : "Error while processing the webhook"
         })

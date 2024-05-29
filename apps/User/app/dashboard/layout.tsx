@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import {Sidebar} from "@repo/ui/sidebar";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@repo/authoptions/auth";
+import { redirect } from "next/navigation";
 
 
 export const metadata: Metadata = {
@@ -7,14 +10,21 @@ export const metadata: Metadata = {
   description: "By devs@IIT_MANDI",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
-}): JSX.Element {
+}) {
+
+  const session = await getServerSession(authOptions);
+
+  if(!session?.user){
+    return redirect("/api/auth/signin");
+  }
+  
   return (
-        <div className="flex w-full h-screen">
-            <div className="w-1/6 border-r-2 p-2">
+        <div className="flex w-full min-h-screen">
+            <div className="sm:min-w-[250px] border-r-2 p-2">
                 {Links.map((item) : any=>{
                     return <Sidebar linkItem = {item} />
                 })}
@@ -42,11 +52,19 @@ const Links = [
       </svg>
     },
     {
-        title : "Transfer",
-        link : "/dashboard/transfer",
+        title : "Wallet",
+        link : "/dashboard/wallet",
         id : "3",
         icon : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5" />
       </svg>
     },
+    {
+      title : "P2P Transfer",
+      link : "/dashboard/p2p",
+      id : "4",
+      icon : <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25" />
+    </svg>
+    }
 ]

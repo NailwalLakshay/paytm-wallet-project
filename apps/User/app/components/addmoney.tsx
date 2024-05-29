@@ -3,7 +3,7 @@ import {TextInput} from "@repo/ui/textinput";
 import {Select} from "@repo/ui/select";
 import { useState } from "react";
 import { Button } from "@repo/ui/button";
-import { OnRampTransactionAction } from "../lib/onRampTransactionAction";
+import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction";
 
 export const Addmoney=()=>{
 
@@ -13,7 +13,9 @@ export const Addmoney=()=>{
 
     return (
         <div>
-            <TextInput label="Amount" type="number" placeholder="$1000" onChange={setAmount} /> 
+            <TextInput label="Amount" type="number" placeholder="$1000" onChange={(value)=>{
+                setAmount(parseInt(value))
+            }} /> 
             
             <Select label="Bank" onSelect={ (value) => {
                 setRedirectUrl(
@@ -23,7 +25,7 @@ export const Addmoney=()=>{
 
             }} options={options}/>
 
-            <Button onClick={()=>{
+            <Button OnClick={()=>{
                 OnRampTransactionAction(amount , provider);
                 window.location.href = redirectUrl || "";
             }} className="bg-black mt-4 text-white p-2 rounded-xl">Add Money</Button>

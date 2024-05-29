@@ -5,15 +5,15 @@ import { ReactNode } from "react";
 interface ButtonProps {
   children: ReactNode;
   className?: string;
-  onClick? : ()=>void
+  OnClick? : ()=>void
 }
 
-export const Button = ({ children, className , onClick}: ButtonProps) => {
+export const Button = ({ children, className , OnClick}: ButtonProps) => {
   return (
     <button
       className={`${className}`}
-      onClick={async () => {
-        if(onClick) onClick()
+      onClick={() => {
+        if(OnClick) OnClick()
       }}
     >
       {children}

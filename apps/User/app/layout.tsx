@@ -1,4 +1,5 @@
 import { AppBar } from "@repo/ui/appbar";
+import { Footer } from "@repo/ui/footer";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -23,6 +24,7 @@ export default function RootLayout({
           <div className="flex flex-col">
             <AppBar/>
             {children}
+            <Footer/>
           </div>
       </body>
         </Provider>

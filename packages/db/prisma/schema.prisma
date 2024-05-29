@@ -8,13 +8,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id Int @id @default(autoincrement())
   email String @unique
   password String 
   Balance Balance[]
   OnRampTransaction OnRampTransaction[]
+  sentTransfers P2P_TRANSFER[] @relation(name: "fromUserRelation")
+  receivedTransfer P2P_TRANSFER[] @relation(name : "toUserRelation")
+  accountNumber String @unique @default(uuid())
 }
 model Balance {
   id Int @id @default(autoincrement())
@@ -22,6 +24,17 @@ model Balance {
   locked Int
   userId Int @unique
   user User @relation(fields: [userId] , references: [id])
+}
+
+model P2P_TRANSFER {
+  id Int @id @default(autoincrement())
+  startDate DateTime
+  amount Int
+  fromUserId Int
+  toUserId Int
+  status OnRampStatus @default(PENDING)
+  fromUser User @relation( name: "fromUserRelation" , fields: [fromUserId] , references: [id])
+  toUser User @relation( name: "toUserRelation" , fields: [toUserId] , references: [id])
 }
 
 model OnRampTransaction{

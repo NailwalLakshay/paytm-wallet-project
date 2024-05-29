@@ -1,23 +1,19 @@
+import { Card } from "@repo/ui/card";
 
 
-export const Transaction = ({transaction , label , classname} : {
+export const P2P_Transaction = ({transaction , label , user , classname} : {
     transaction : {
-        StartTime : Date,
-        amount : number,
-        Status : string,
-        Provider : string
-    }[]    ,
+        id: number;
+        startDate: Date;
+        amount: number;
+        fromUserId: number;
+        toUserId: number;
+        status: string
+    }[],
     label : string,
-    classname : string
+    user:any,
+    classname? : string
 })=>{
-
-    if(transaction.length == 0){
-        return (
-            <div>
-                {label}
-            </div>
-        )
-    }
 
     const checkStatusIcon = ( status : string )=>{
 
@@ -42,21 +38,30 @@ export const Transaction = ({transaction , label , classname} : {
       
     }
 
-    return (
+    if(transaction.length == 0){
+        return <div>
+            <h1>{label}</h1>
+        </div>
+    }
 
-        <div className= {classname}>
-            {transaction.map((item)=>{
-                return <div className="flex justify-between mb-2 ">
+    return (
+        <div className="flex flex-col gap-4">
+            <Card title="Recent P2P Transactions">
+            <div className={`${classname}`} >
+                
+                {transaction.map((item)=>{
+                    return <div className="flex justify-between mb-2 ">
                     <div>
                         <h1 className="flex gap-1"> { 
-                            checkStatusIcon(item.Status)
+                            checkStatusIcon(item.status)
                         }Received INR</h1>
-                        <h1>{item.StartTime.toDateString()}</h1>
+                        <h1>{item.startDate.toDateString()}</h1>
                     </div>
-                    <div className="text-xl">+Rs {item.amount}</div>
+                    <div className="text-xl">{ (item.fromUserId === parseInt(user?.id)) ? "-": "+" }Rs {item.amount}</div>
                 </div>
-            })}
+                })}
+            </div>
+            </Card>
         </div>
     )
-
 }
