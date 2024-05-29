@@ -2,52 +2,82 @@ import express from 'express';
 import {prisma} from "@repo/db/client";
 
 
-
 const app = express();
 
-app.post("/hdfc-server", async (req,res)=>{
+app.use(express.json());
 
+app.post("/", async (req,res)=>{
+    console.log(req.body)
     const paymentInformation : {
         token : string,
         userId : string,
         amount : string
     } = {
         token : req.body.token,
-        userId : req.body.user_identifier,
+        userId : req.body.userId,
         amount : req.body.amount
     }
 
     try {
-        await prisma.$transaction([
-            prisma.balance.update({
+        await prisma.$transaction(async (tx)=>{
+            
+            await tx.balance.update({
                 where : {
-                    userId : Number(paymentInformation.userId)
+                    userId : parseInt(paymentInformation.userId)
                 },
                 data : {
                     amount : {
-                        increment : Number(paymentInformation.amount)
+                        increment : parseInt(paymentInformation.amount)
                     }
                 }
-            }),
-            prisma.onRampTransaction.update({
+            }).catch((err)=>{
+                console.log(err)
+                throw err;
+            })
+            
+            const txn = await tx.onRampTransaction.updateMany({
                 where : {
-                    userId : Number(paymentInformation.userId)
+                    AND : [
+                        {token : (paymentInformation.token)},
+                        {userId : parseInt(paymentInformation.userId)},
+                        {amount : parseInt(paymentInformation.amount)},
+                        {Status : "PENDING"}
+                    ]
                 },
                 data : {
                     Status : "SUCCESS"
                 }
+            }).catch((err)=>{
+                console.log(err)
+                throw err;
             })
-        ])   
 
-        res.status(200).json({
-            message : "Succesfully updated"
-        })
+            // even when not matched on db the above call may not throw error but simply say txn.count = 0
+            if(txn.count === 0){
+                throw new Error("Transaction Failed")
+            }
+        }   
+    )
+
+    return res.status(200).json({
+        message : "Succesfully updated"
+    })
 
     } catch (error) {
+        await prisma.onRampTransaction.update({
+            where : {
+                token : paymentInformation.token
+            },
+            data : {
+                Status : "FAILED"
+            }
+        })
+
         res.status(411).json( { 
             message : "Error while processing the webhook"
         })
     }
+    
         
 })
 

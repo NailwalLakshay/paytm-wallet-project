@@ -2,13 +2,14 @@
 import {TextInput} from "@repo/ui/textinput";
 import {Select} from "@repo/ui/select";
 import { useState } from "react";
-import { redirect } from "next/dist/server/api-utils";
 import { Button } from "@repo/ui/button";
+import { OnRampTransactionAction } from "../lib/onRampTransactionAction";
 
 export const Addmoney=()=>{
 
     const [amount , setAmount] = useState(0);
-    const [redirectUrl , setRedirectUrl] = useState("");
+    const [redirectUrl , setRedirectUrl] = useState(options[0]?.redirectUrl || "");
+    const [provider , setProvider] = useState(options[0]?.value || "")
 
     return (
         <div>
@@ -18,9 +19,14 @@ export const Addmoney=()=>{
                 setRedirectUrl(
                     options.find((option)=> option.value === value )?.redirectUrl || ""
                 )
+                setProvider(options.find((option)=> option.value === value)?.value || "")
+
             }} options={options}/>
 
-            <Button className="bg-black mt-4 text-white p-2 rounded-xl">Add Money</Button>
+            <Button onClick={()=>{
+                OnRampTransactionAction(amount , provider);
+                window.location.href = redirectUrl || "";
+            }} className="bg-black mt-4 text-white p-2 rounded-xl">Add Money</Button>
         </div>
     )
 }

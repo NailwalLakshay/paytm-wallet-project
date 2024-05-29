@@ -16,12 +16,10 @@ model User {
   Balance Balance[]
   OnRampTransaction OnRampTransaction[]
 }
-
 model Balance {
   id Int @id @default(autoincrement())
   amount Int
   locked Int
-  decimal Int
   userId Int @unique
   user User @relation(fields: [userId] , references: [id])
 }
@@ -29,9 +27,8 @@ model Balance {
 model OnRampTransaction{
   id Int @id @default(autoincrement())
   amount Int
-  decimal Int
   Provider String
-  userId Int @unique
+  userId Int 
   Status OnRampStatus
   StartTime DateTime
   token String @unique

@@ -21,7 +21,6 @@ export default async function(){
         select : {
             amount : true,
             locked:true,
-            decimal : true
         }
     })
 
@@ -51,7 +50,7 @@ export default async function(){
                 <div>
                     <div>
                         <Card title="Balance">
-                            <Balance amount={balance?.amount || 0} locked= {balance?.locked || 0} decimal={balance?.decimal || 1} />    
+                            <Balance amount={balance?.amount || 0} locked= {balance?.locked || 0} decimal={1} />    
                         </Card>   
                     </div>    
                     <div>

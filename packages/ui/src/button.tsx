@@ -1,21 +1,19 @@
 "use client";
 
-import { signIn, signOut } from "next-auth/react";
 import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
   className?: string;
-  fxn?: string;
+  onClick? : ()=>void
 }
 
-export const Button = ({ children, className , fxn}: ButtonProps) => {
+export const Button = ({ children, className , onClick}: ButtonProps) => {
   return (
     <button
       className={`${className}`}
       onClick={async () => {
-        if(fxn === "signin") await signIn();
-        else if(fxn === "logout") await signOut();
+        if(onClick) onClick()
       }}
     >
       {children}
