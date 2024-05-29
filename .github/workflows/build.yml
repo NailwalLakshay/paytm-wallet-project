@@ -1,0 +1,22 @@
+name : Build on PR
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3 # to clone the repo , its written by someone else
+      - name: Use Node.js
+        uses: action/setup-node@v3
+        with:
+          node-version: '20'
+      
+      - name: Install Dependencies
+        run : npm Install
+
+      - name: Run Build
+        run : npm run build
