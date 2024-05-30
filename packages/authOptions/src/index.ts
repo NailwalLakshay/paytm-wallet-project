@@ -74,9 +74,6 @@ export const authOptions = ({
             session.user.id = token.sub;
             return session;
         },
-        async redirect({url , baseUrl} : any){
-            return baseUrl;
-        }
           
     },
     secret : process.env.NEXTAUTH_SECRECT || "secret"
