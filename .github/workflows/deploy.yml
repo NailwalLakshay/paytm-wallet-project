@@ -29,13 +29,13 @@ jobs:
             - name : Verify Pushed Image
               run : docker pull b21303/paytm-project:latest
 
-            - name : Deploy to EC2
-              uses : appleboy/ssh-action@master
+            - name: Deploy to EC2
+              uses: appleboy/ssh-action@master
               with:
-                host : ${{ secrets.AWS_SSH_HOST}}
-                username : ${{secrets.AWS_SSH_USERNAME}}
-                key : ${{secrets.AWS_SSH_KEY}}
-                script : |
+                host: ${{ secrets.AWS_SSH_HOST}}
+                username: ${{ secrets.AWS_SSH_USERNAME }}
+                key: ${{ secrets.AWS_SSH_KEY }}
+                script: |
                     sudo docker pull b21303/paytm-project:latest
                     sudo docker stop paytm-project || true
                     sudo docker rm paytm-project || true
