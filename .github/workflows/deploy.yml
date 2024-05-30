@@ -45,5 +45,5 @@ jobs:
 env : 
     GOOGLE_CLIENT_ID : ${{secrets.GOOGLE_CLIENT_ID}}   
     GOOGLE_CLIENT_SECRET : ${{secrets.GOOGLE_CLIENT_SECRET}}
-    NEXTAUTH_URL : "https://paytm.lakshaynailwaldevs.top"
-    NEXTAUTH_SECRET : ${{secrets.NEXTAUTH_SECRET}}"
+    NEXTAUTH_URL : https://paytm.lakshaynailwaldevs.top
+    NEXTAUTH_SECRET : ${{secrets.NEXTAUTH_SECRET}}
