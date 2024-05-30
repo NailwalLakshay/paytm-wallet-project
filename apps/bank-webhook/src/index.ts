@@ -20,7 +20,7 @@ app.post("/", async (req,res)=>{
     }
 
     try {
-        await prisma.$transaction(async (tx)=>{
+        await prisma.$transaction(async (tx : any)=>{
             
             await tx.balance.update({
                 where : {
