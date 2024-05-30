@@ -79,6 +79,7 @@ export const authOptions = ({
         async redirect({url , baseUrl} : any){
             console.log("redirect url : ", url);
             console.log("redirect baseUrl : ", baseUrl);
+            console.log("redirect nextauth-url : ", process.env.NEXTAUTH_URL)
             return process.env.NEXTAUTH_URL || "https://paytm.lakshaynailwaldevs.top";
         }
           
