@@ -37,6 +37,7 @@ jobs:
                 key: ${{ secrets.AWS_SSH_KEY }}
                 script: |
                     sudo docker pull b21303/paytm-project:latest
+                    sudo docker images
                     sudo docker stop paytm || true
                     sudo docker rm -f paytm || true
                     sudo docker run -d --name paytm -e ${{secrets.DB_URL}} -p 3005:3000 b21303/paytm-project:latest
