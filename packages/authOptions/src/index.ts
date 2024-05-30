@@ -14,6 +14,8 @@ export const authOptions = ({
             },
 
             async authorize(credentials : any){
+
+                console.log("nextauth-url : ", process.env.NEXTAUTH_URL)
                 // db check for credentials
                 const hashedPassword = await bcrypt.hash(credentials?.password , 10);
                 
@@ -74,8 +76,14 @@ export const authOptions = ({
             session.user.id = token.sub;
             return session;
         },
+        async redirect({url , baseUrl} : any){
+            console.log("redirect url : ", url);
+            console.log("redirect baseUrl : ", baseUrl);
+            return baseUrl;
+        }
           
     },
-    secret : process.env.NEXTAUTH_SECRECT || "secret"
+    secret : process.env.NEXTAUTH_SECRECT || "secret",
+    
 
 })
