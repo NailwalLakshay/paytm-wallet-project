@@ -39,4 +39,4 @@ jobs:
                     sudo docker pull b21303/paytm-project:latest
                     sudo docker stop paytm-project || true
                     sudo docker rm paytm-project || true
-                    sudo docker run -d --name paytm-project -e ${{secrets.DB_URL}} -p 3005:3000 paytm-project:latest 
+                    sudo docker run -d --name paytm-project -e ${{secrets.DB_URL}} -p 3005:3000 b21303/paytm-project:latest 
