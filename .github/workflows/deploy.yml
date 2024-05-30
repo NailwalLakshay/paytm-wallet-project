@@ -43,7 +43,7 @@ jobs:
                     sudo docker run -p3005:3000 --name paytm -d -e "DATABASE_URL = ${{secrets.DB_URL}}" b21303/paytm-project:latest
 
 env : 
-    GOOGLE_CLIENT_ID=""
-    GOOGLE_CLIENT_SECRET=""
-    NEXTAUTH_URL="http://localhost:3000"
-    NEXTAUTH_SECRET="lakshay"
+    GOOGLE_CLIENT_ID : ""
+    GOOGLE_CLIENT_SECRET : ""
+    NEXTAUTH_URL : "http://localhost:3000"
+    NEXTAUTH_SECRET : "lakshay"
