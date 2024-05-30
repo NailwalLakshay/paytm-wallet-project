@@ -40,5 +40,4 @@ jobs:
                     sudo docker images
                     sudo docker stop paytm || true
                     sudo docker rm -f paytm || true
-                    sudo docker run -p3005:3000 
-                    --name paytm -e "${{secrets.DB_URL}}" -d b21303/paytm-project:latest
+                    sudo docker run -p3005:3000 --name paytm -d b21303/paytm-project:latest
