@@ -41,10 +41,4 @@ jobs:
                     sudo docker images
                     sudo docker stop paytm || true
                     sudo docker rm -f paytm || true
-                    sudo docker run -p 3005:3000 --name paytm -d -e DATABASE_URL="${{secrets.DB_URL}}" -e DB_UR="123" b21303/paytm-project:latest
-
-env : 
-  GOOGLE_CLIENT_ID : ${{secrets.GOOGLE_CLIENT_ID}}   
-  GOOGLE_CLIENT_SECRET : ${{secrets.GOOGLE_CLIENT_SECRET}}
-  NEXTAUTH_URL : ${{secrets.NEXTAUTH_URL}}
-  NEXTAUTH_SECRET : ${{secrets.NEXTAUTH_SECRET}}
+                    sudo docker run -p 3005:3000 --name paytm -d -e DATABASE_URL="${{secrets.DB_URL}}" -e GOOGLE_CLIENT_ID="${{secrets.GOOGLE_CLIENT_ID}}" -e GOOGLE_CLIENT_SECRET="${{secrets.GOOGLE_CLIENT_SECRET}}" -e NEXTAUTH_URL="${{secrets.NEXTAUTH_URL}}" -e NEXTAUTH_SECRET="${{secrets.NEXTAUTH_SECRET}}" b21303/paytm-project:latest
