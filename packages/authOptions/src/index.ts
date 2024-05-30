@@ -15,7 +15,7 @@ export const authOptions = ({
 
             async authorize(credentials : any){
 
-                console.log("nextauth-url : ", process.env.NEXTAUTH_URL)
+                // console.log("nextauth-url : ", process.env.NEXTAUTH_URL)
                 // db check for credentials
                 const hashedPassword = await bcrypt.hash(credentials?.password , 10);
                 
@@ -82,7 +82,7 @@ export const authOptions = ({
             console.log("redirect url : ", url);
             console.log("redirect baseUrl : ", baseUrl);
             console.log("redirect nextauth-url : ", process.env.NEXTAUTH_URL)
-            return process.env.NEXTAUTH_URL || "https://paytm.lakshaynailwaldevs.top";
+            return baseUrl;
         }
           
     },
