@@ -2,7 +2,7 @@
   "name": "paytm_app",
   "private": true,
   "scripts": {
-    "build": "npm run db:generate && turbo build  ",
+    "build": "turbo build  ",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",

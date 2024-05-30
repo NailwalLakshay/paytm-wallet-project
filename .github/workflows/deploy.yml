@@ -45,7 +45,7 @@ jobs:
                     sudo docker images
                     sudo docker stop paytm || true
                     sudo docker rm -f paytm || true
-                    sudo docker run -p 3005:3000 --name paytm -d -e "DATABASE_URL = ${{secrets.DB_URL}}" b21303/paytm-project:latest
+                    sudo docker run -p 3005:3000 --name paytm -d -e "DATABASE_URL = ${{secrets.DB_URL}}" -e "DB_UR = 123" b21303/paytm-project:latest
 
 
 
