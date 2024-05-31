@@ -75,12 +75,12 @@ export async function P2P_Transfer(amount : number, toUser : string ){
             })
 
             if(!toUserBalanceUp || !fromUserBalanceUp || !p2pTxn){ 
-                throw new Error("Failed Transfer")
+                throw new Error("fail")
             }
         })
 
         return {
-            message : "Transfer Successfull"
+            message : "success"
         }
     } catch (error) {
         
@@ -95,7 +95,7 @@ export async function P2P_Transfer(amount : number, toUser : string ){
         })
 
         return {
-            message : "Transaction failed"
+            message : "fail"
         }
     }
 }

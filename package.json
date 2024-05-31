@@ -6,13 +6,14 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "db:generate" : "cd packages/db && npx prisma generate && cd ../..",
-    "start-user-app" : "cd ./apps/User && npm run start"
+    "db:generate": "cd packages/db && npx prisma generate && cd ../..",
+    "start-user-app": "cd ./apps/User && npm run start"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
     "prettier": "^3.2.5",
+    "prisma": "^5.14.0",
     "turbo": "latest"
   },
   "engines": {
@@ -24,7 +25,11 @@
     "packages/*"
   ],
   "dependencies": {
+    "@auth/prisma-adapter": "^2.1.0",
+    "@prisma/client": "^5.14.0",
     "bcryptjs": "^2.4.3",
-    "next-auth": "^4.24.7"
+    "next-auth": "^4.24.7",
+    "react-hot-toast": "^2.4.1",
+    "recoil": "^0.7.7"
   }
 }

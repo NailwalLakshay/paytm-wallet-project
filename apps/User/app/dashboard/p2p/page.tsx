@@ -1,37 +1,40 @@
-import { getServerSession } from "next-auth";
+"use client"
+
 import { P2P_Transaction } from "../../components/p2pTransaction";
 import { SendMoney } from "../../components/sendmoney";
-import { authOptions } from "@repo/authoptions/auth";
 import { redirect } from "next/navigation";
-import { prisma } from "@repo/db/client";
+import { p2pRecentTransaction } from "../../lib/helpers/helperfxn";
+import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { p2pRecentTransactionFactor } from "../../store/recoil";
 
 
+export default function() {
 
-export default async function() {
+    const numberToShow : number = 5;
+    const callDone = useRecoilValue(p2pRecentTransactionFactor);
+    const [transfers , setTransfers] = useState<{
+        id: number;
+        startDate: Date;
+        amount: number;
+        fromUserId: number;
+        toUserId: number;
+        status : string
+    }[]>([]);
 
-    const session = await getServerSession(authOptions);
-    if(!session?.user){
-       return redirect("/api/auth/signin");
-    }
-
-    const tranfers = await prisma.p2P_TRANSFER.findMany({
-        take : 10,
-        where : {
-            OR : [
-                {fromUserId : parseInt(session?.user?.id)},
-                {toUserId : parseInt(session?.user?.id)},
-            ],
-        },
-        orderBy: {
-            startDate : "desc"
-        }
-    })
+    useEffect(()=>{
+        p2pRecentTransaction(numberToShow).then((res)=>{
+            console.log(res);
+            if(res) setTransfers(res)
+            else redirect("/api/auth/signin");
+        })
+    },[callDone])
 
     return(
     <div className="w-full p-4 mt-10">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <SendMoney/>
-            <P2P_Transaction classname="h-[400px] overflow-x-hidden overflow-y-scroll" user={session.user} transaction={tranfers} label="No Recent Transfers" />
+            <SendMoney />
+            <P2P_Transaction classname="h-[400px] overflow-x-hidden " transaction={transfers} label="No Recent Transfers" />
         </div>
     </div>
     )

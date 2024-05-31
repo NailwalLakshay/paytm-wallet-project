@@ -11,13 +11,14 @@ datasource db {
 model User {
   id Int @id @default(autoincrement())
   email String @unique
-  password String 
+  password String
   Balance Balance[]
   OnRampTransaction OnRampTransaction[]
   sentTransfers P2P_TRANSFER[] @relation(name: "fromUserRelation")
   receivedTransfer P2P_TRANSFER[] @relation(name : "toUserRelation")
   accountNumber String @unique @default(uuid())
 }
+
 model Balance {
   id Int @id @default(autoincrement())
   amount Int

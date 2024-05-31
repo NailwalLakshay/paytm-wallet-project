@@ -13,20 +13,26 @@ export const OnRampTransactionAction = async(amount : number , provider : string
         }
     }
 
-    const token = String(Math.random()*100); // generally we hit here the bank api
+    try {
+        const token = String(Math.random()*100); // generally we hit here the bank api
     
-    await prisma.onRampTransaction.create({
-        data: {
-            userId : Number(session?.user?.id),
-            amount,
-            Provider : provider,
-            token : token,
-            StartTime : new Date,
-            Status : "PENDING",
+        await prisma.onRampTransaction.create({
+            data: {
+                userId : Number(session?.user?.id),
+                amount,
+                Provider : provider,
+                token : token,
+                StartTime : new Date,
+                Status : "PENDING",
+            }
+        });
+        return {
+            message : "Transaction initiated successfully"
         }
-    });
-
-    return {
-        message : "Transaction initiated successfully"
+    } catch (error) {
+        return {
+            message : "fail"
+        }
     }
+
 }

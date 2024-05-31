@@ -4,12 +4,17 @@ import {Select} from "@repo/ui/select";
 import { useState } from "react";
 import { Button } from "@repo/ui/button";
 import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction";
+import toast from "react-hot-toast";
+import { useRecoilState} from "recoil";
+import { onRampTxn } from "../store/recoil";
 
 export const Addmoney=()=>{
 
     const [amount , setAmount] = useState(0);
     const [redirectUrl , setRedirectUrl] = useState(options[0]?.redirectUrl || "");
     const [provider , setProvider] = useState(options[0]?.value || "")
+
+    const [onRampCheck , setOnRampCheck] =  useRecoilState(onRampTxn);
 
     return (
         <div>
@@ -26,8 +31,17 @@ export const Addmoney=()=>{
             }} options={options}/>
 
             <Button OnClick={()=>{
-                OnRampTransactionAction(amount , provider);
-                window.location.href = redirectUrl || "";
+                OnRampTransactionAction(amount , provider).then((res)=>{
+                    if(res.message != "fail"){
+                        toast.loading("Transfering to Bank Redirect Url || Please Wait..." , {duration : 4000});
+                        setOnRampCheck(!onRampCheck);
+                        window.open(redirectUrl || "" , "_blank")
+                    }
+                    else{
+                        toast.error("Transaction failed || Please retry after some time" , {duration : 4000})
+                    }
+                });
+
             }} className="bg-black mt-4 text-white p-2 rounded-xl">Add Money</Button>
         </div>
     )

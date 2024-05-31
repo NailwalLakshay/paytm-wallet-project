@@ -1,45 +1,51 @@
+"use client"
 import { Card } from "@repo/ui/card";
 import { Addmoney } from "../../components/addmoney";
 import { Balance } from "../../components/balance";
 import { Transaction } from "../../components/transaction";
-import { prisma } from "@repo/db/client";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@repo/authoptions/auth";
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { UserBalance, UserOnRampTransaction } from "../../lib/helpers/helperfxn";
+import { useRecoilValue } from "recoil";
+import { onRampTxn } from "../../store/recoil";
 
-export default async function(){
 
-    const session = await getServerSession(authOptions);
-    if(!session?.user){
-        return redirect("/");
-    }
+export default function(){
 
-    const balance = await prisma.balance.findFirst({
-        where : {
-            userId : Number(session.user.id)
-        },
-        select : {
-            amount : true,
-            locked:true,
-        }
+    const [balance , setBalance] = useState<{
+        amount : number,
+        locked : number
+    }>({
+        amount : 0,
+        locked : 0
+    });
+
+    const onRampCheck = useRecoilValue(onRampTxn);
+
+    const [transaction , setTransaction] = useState<{
+        amount: number;
+        Provider: string;
+        Status: string;
+        StartTime: Date;
+    }[]>([])
+
+    const numberToShow = 5;
+
+    // const [status , setStatus] = useState("");
+
+    useEffect(()=>{
+        UserBalance().then((res)=>{
+            if(res) setBalance(res);
+        })
     })
 
-    const transaction = await prisma.onRampTransaction.findMany({
-        take : 10,
-        where : {
-            userId : parseInt(session.user.id),
-            Status : "PENDING"
-        },
-        select : {
-            StartTime : true,
-            amount : true,
-            Status : true,
-            Provider : true
-        },
-        orderBy : {
-            StartTime : "desc"
-        }
-    })
+    useEffect(()=>{
+
+        UserOnRampTransaction(numberToShow).then((res)=>{
+            if(res) setTransaction(res)
+        })
+
+    } , [onRampCheck])
+
 
     return(
         <div className="p-4 w-full flex flex-col gap-10">

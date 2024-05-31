@@ -3,8 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from "bcrypt";
 import {prisma} from "@repo/db/client";
+// import { PrismaAdapter } from "@auth/prisma-adapter";
+// const PrismaAdapter = require("@auth/prisma-adapter").PrismaAdapter;
+
+// const {PrismaAdapter} = require(`@auth/prisma-adapter`);
 
 export const authOptions = ({
+    // adapter : PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
             name : "Credentials",
@@ -17,7 +22,7 @@ export const authOptions = ({
 
                 // console.log("nextauth-url : ", process.env.NEXTAUTH_URL)
                 // db check for credentials
-                const hashedPassword = await bcrypt.hash(credentials?.password , 10);
+                const hashedPassword = await bcrypt.hash(credentials.password , 10);
                 
                 const existingUser = await prisma.user.findFirst({
                     where: {
@@ -66,13 +71,14 @@ export const authOptions = ({
             }
         }),
 
-        GoogleProvider({
-            clientId : process.env.GOOGLE_CLIENT_ID!,
-            clientSecret : process.env.GOOGLE_CLIENT_SECRET!
-        })
+        // GoogleProvider({
+        //     clientId : process.env.GOOGLE_CLIENT_ID!,
+        //     clientSecret : process.env.GOOGLE_CLIENT_SECRET!
+        // })
     ],
     callbacks : {
         async session({session , token , user}:any){
+            // console.log("session : ", user);
             session.user.id = token.sub;
             return session;
         },

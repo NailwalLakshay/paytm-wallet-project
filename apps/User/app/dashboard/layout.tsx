@@ -3,6 +3,7 @@ import {Sidebar} from "@repo/ui/sidebar";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@repo/authoptions/auth";
 import { redirect } from "next/navigation";
+import { Toaster } from "react-hot-toast";
 
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default async function RootLayout({
                     return <Sidebar linkItem = {item} />
                 })}
             </div>
+            <Toaster position="bottom-right" />
             {children}
         </div>
   );

@@ -8,7 +8,6 @@ app.use(express.json());
 
 app.post("/", async (req,res)=>{
 
-    // console.log(req.body)
     const paymentInformation : {
         token : string,
         userId : string,
@@ -31,7 +30,7 @@ app.post("/", async (req,res)=>{
                         increment : parseInt(paymentInformation.amount)
                     }
                 }
-            }).catch((err)=>{
+            }).catch((err : any)=>{
                 console.log(err)
                 throw err;
             })
@@ -48,7 +47,7 @@ app.post("/", async (req,res)=>{
                 data : {
                     Status : "SUCCESS"
                 }
-            }).catch((err)=>{
+            }).catch((err:any)=>{
                 console.log(err)
                 throw err;
             })

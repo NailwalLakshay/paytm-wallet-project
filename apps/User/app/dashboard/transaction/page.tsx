@@ -33,6 +33,9 @@ export default async function(){
             startDate : "desc"
         }
     })
+
+    //  i want to add pagination
+
     return(
         <div className="flex flex-col gap-10 p-4 w-full ">
             <div className="font-bold text-4xl mt-10 text-purple-500">
@@ -45,7 +48,7 @@ export default async function(){
                 <h1>P2P Transactions</h1>
             </div>
             <div>
-                <P2P_Transaction classname="" label="" transaction={transfer} user={session.user} />
+                <P2P_Transaction classname="" label="" transaction={transfer} />
             </div>
         </div>
     )
