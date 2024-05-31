@@ -4,7 +4,7 @@ import { Card } from "@repo/ui/card";
 import { useEffect, useState } from "react";
 import { UserDetails } from "../lib/helpers/helperfxn";
 
-export const checkStatusIcon = ( status : string )=>{
+const checkStatusIcon = ( status : string )=>{
 
     if( status === "PENDING") return <div className="text-gray-500 font-bold">
          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
