@@ -1,8 +1,8 @@
 "use client"
 
 import { Card } from "@repo/ui/card";
-import {useSession} from "next-auth/react"
-import { redirect } from "next/navigation";
+import { useEffect, useState } from "react";
+import { UserDetails } from "../lib/helpers/helperfxn";
 
 export const checkStatusIcon = ( status : string )=>{
 
@@ -27,6 +27,7 @@ export const checkStatusIcon = ( status : string )=>{
   
 }
 
+
 export const P2P_Transaction = ({transaction , label , classname} : {
     transaction : {
         id: number;
@@ -40,15 +41,16 @@ export const P2P_Transaction = ({transaction , label , classname} : {
     classname? : string
 })=>{
 
-    
+    const [userId , setUserId] = useState(0);
 
-    const session = useSession();
-    if(!session){
-        return redirect("/api/auth/signin");
-    }
+    useEffect(()=>{
+        UserDetails().then((res)=>{
+            if(res)
+                setUserId(res.id);
+        })
+    })
 
 
-    
     if(transaction.length == 0){
         return (
             <Card title={label}>
@@ -70,7 +72,7 @@ export const P2P_Transaction = ({transaction , label , classname} : {
                         }Received INR</h1>
                         <h1>{item.startDate.toDateString()}</h1>
                     </div>
-                    <div className="text-xl">{ (item.fromUserId === parseInt(session.data?.user?.id )) ? "-": "+" }Rs {item.amount}</div>
+                    <div className="text-xl">{ (item.fromUserId === userId) ? "-": "+" }Rs {item.amount}</div>
                 </div>
                 })}
             </div>

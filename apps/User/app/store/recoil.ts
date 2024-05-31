@@ -7,7 +7,7 @@ export const p2pRecentTransactionFactor = atom({
 
 export const SessionUser = atom({
     key: "sessionUser",
-    default : null
+    default : {}
 })
 
 export const onRampTxn = atom({

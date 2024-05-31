@@ -37,8 +37,7 @@ export const authOptions = ({
                     }
                     else{
                         return{
-                            id : existingUser.id.toString(),
-                            email : existingUser.email,
+                            ...existingUser , id : existingUser.id.toString()
                         }
                     }
                 }
@@ -60,8 +59,8 @@ export const authOptions = ({
                     })
     
                     return {
+                        ...newUser ,  
                         id : newUser.id.toString(),
-                        email : newUser.email
                     }
                 } catch (error) {
                     console.log(error);
@@ -77,11 +76,12 @@ export const authOptions = ({
         // })
     ],
     callbacks : {
-        async session({session , token , user}:any){
-            // console.log("session : ", user);
-            session.user.id = token.sub;
-            return session;
+        async session({session , token , user}:any){     
+            session.user.id = token.sub
+            console.log(session)       
+            return session 
         },
+
         async redirect({url , baseUrl} : any){
             return baseUrl;
         }    
