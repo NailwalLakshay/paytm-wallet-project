@@ -1,4 +1,4 @@
-name : Build and Deploy to Docker Hub
+name : Build and Deploy bank to Docker Hub
 
 on : 
     push :
@@ -27,7 +27,7 @@ jobs:
                 push : true
                 tags : b21303/bank:latest
             
-            - name: Deploy Bank-webhook to EC2 instance
+            - name: Deploy Bank to EC2 instance
               uses : appleboy/ssh-action@master
               with : 
                 host : ${{ secrets.AWS_SSH_HOST}}
@@ -38,4 +38,4 @@ jobs:
                     sudo docker images
                     sudo docker stop bank || true
                     sudo docker rm -f bank || true
-                    sudo docker run -p 3000:2000 --name bank -d -e DATABASE_URL="${{secrets.DB_URL}}" b21303/bank:latest
+                    sudo docker run -p 4000:4000 --name bank -d -e DATABASE_URL="${{secrets.DB_URL}}" b21303/bank:latest
