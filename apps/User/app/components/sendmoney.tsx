@@ -8,7 +8,7 @@ import { P2P_Transfer } from "../lib/actions/p2pTransfer"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
 import { p2pRecentTransactionFactor } from "../store/recoil"
-import { p2pTransferSchema } from "@repo/zodTypes/types"
+import { p2pTransferSchema } from "@repo/zodtypes/types"
 
 export const SendMoney = ()=>{
 

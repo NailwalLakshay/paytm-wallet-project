@@ -7,7 +7,7 @@ import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction"
 import toast from "react-hot-toast";
 import { useRecoilState} from "recoil";
 import { onRampTxn } from "../store/recoil";
-import { onRampTxnSchema } from "@repo/zodTypes/types";
+import { onRampTxnSchema } from "@repo/zodtypes/types";
 
 export const Addmoney=()=>{
 

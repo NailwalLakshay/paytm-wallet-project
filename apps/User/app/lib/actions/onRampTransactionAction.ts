@@ -2,7 +2,7 @@
 
 import { authOptions } from "@repo/authoptions/auth"
 import { prisma } from "@repo/db/client";
-import { onRampTxnSchema } from "@repo/zodTypes/types";
+import { onRampTxnSchema } from "@repo/zodtypes/types";
 import { getServerSession } from "next-auth"
 
 export const OnRampTransactionAction = async(amount : number , provider : string)=>{

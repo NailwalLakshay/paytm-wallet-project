@@ -6,7 +6,7 @@ import { TextInput } from "@repo/ui/textinput";
 import { useState } from "react";
 import { signIn , useSession} from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
-import { userLoginSchema } from "@repo/zodTypes/types";
+import { userLoginSchema } from "@repo/zodtypes/types";
 import {useRouter , redirect} from "next/navigation";
 
 const validate = (email : string , password : string) => {

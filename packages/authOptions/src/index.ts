@@ -4,7 +4,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from "bcrypt";
 import {prisma} from "@repo/db/client";
 
-import { userLoginSchema } from "@repo/zodTypes/types";
+import { userLoginSchema } from "@repo/zodtypes/types";
 
 const validateEmail = (email : string , password : string) => {
     const res = userLoginSchema.safeParse({email : email , password :password })    

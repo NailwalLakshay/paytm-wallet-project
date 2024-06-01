@@ -2,7 +2,7 @@
 
 import { authOptions } from "@repo/authoptions/auth"
 import { prisma } from "@repo/db/client";
-import { p2pTransferSchema } from "@repo/zodTypes/types";
+import { p2pTransferSchema } from "@repo/zodtypes/types";
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation";
 
