@@ -14,3 +14,8 @@ export const onRampTxn = atom({
     key : "onRampTxn",
     default : false
 })
+
+export const BtnToggler = atom({
+    key : "BtnToggler",
+    default : false
+})

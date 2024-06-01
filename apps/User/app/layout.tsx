@@ -1,4 +1,4 @@
-import { AppBar } from "@repo/ui/appbar";
+import { AppBar } from "./components/appbar";
 import { Footer } from "@repo/ui/footer";
 import "./globals.css";
 import type { Metadata } from "next";
@@ -22,11 +22,11 @@ export default async function RootLayout({
     <html lang="en">
         <Provider>
       <body className={inter.className}>
-          <div className="flex flex-col justify-between min-h-screen">
             <AppBar/>
+          <div className="flex flex-col min-h-screen ">
             {children}
-            <Footer/>
           </div>
+          <Footer/>
       </body>
         </Provider>
     </html>
