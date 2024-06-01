@@ -8,7 +8,7 @@ RUN npm install
 
 RUN npm run db:generate
 
-RUN npm run build
+RUN npm run build-User
 
 EXPOSE 3000
 

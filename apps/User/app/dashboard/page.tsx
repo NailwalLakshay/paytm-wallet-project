@@ -9,7 +9,7 @@ export default async function (){
     return(
         <div className="p-4 flex flex-col gap-10 mt-10 ">
             <div>
-                <h1 className="font-bold text-4xl mt-10 text-purple-500">Paytm@IIT Dashboard</h1>
+                <h1 className="font-bold text-4xl mt-10 text-blue-500">Paytm@IIT Dashboard</h1>
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 ">
                 <Card title="Available Balance " classname="bg-gray-200 rounded-lg">

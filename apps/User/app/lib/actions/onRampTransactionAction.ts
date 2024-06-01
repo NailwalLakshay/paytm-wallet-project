@@ -2,6 +2,7 @@
 
 import { authOptions } from "@repo/authoptions/auth"
 import { prisma } from "@repo/db/client";
+import { onRampTxnSchema } from "@repo/zodTypes/types";
 import { getServerSession } from "next-auth"
 
 export const OnRampTransactionAction = async(amount : number , provider : string)=>{
@@ -10,6 +11,13 @@ export const OnRampTransactionAction = async(amount : number , provider : string
     if(!session?.user) {
         return {
             message : "user not logged in"
+        }
+    }
+
+    const res = onRampTxnSchema.safeParse({amount , provider});
+    if(!res.success) {
+        return {
+            message : "Invalid data"
         }
     }
 

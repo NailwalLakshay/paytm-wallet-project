@@ -8,6 +8,6 @@ RUN npm install
 
 EXPOSE 2000
 
-RUN npm run build
+RUN npm run build-bank-webhook
 
 CMD [ "node" , "/apps/bank-webhook/dist/index.js" ]

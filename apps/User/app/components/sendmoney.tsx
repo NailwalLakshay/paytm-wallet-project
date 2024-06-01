@@ -8,6 +8,7 @@ import { P2P_Transfer } from "../lib/actions/p2pTransfer"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
 import { p2pRecentTransactionFactor } from "../store/recoil"
+import { p2pTransferSchema } from "@repo/zodTypes/types"
 
 export const SendMoney = ()=>{
 
@@ -21,7 +22,7 @@ export const SendMoney = ()=>{
             <Card title="Send Money">
                 <div className="">
 
-                    <TextInput type="string" label="Email" placeholder="l@g.com" onChange={(value)=>{
+                    <TextInput type="string" label="Email" placeholder="Account Number" onChange={(value)=>{
                         setToUser(value)
                     }}/>
 
@@ -30,8 +31,17 @@ export const SendMoney = ()=>{
                     }}/>
 
                     <Button OnClick={()=>{
-                        toast.loading("Processing Transaction || Please Wait..." , {duration : 2000});
+
+                        const res = p2pTransferSchema.safeParse({amount , toUser});
+
+                        const toastid = toast.loading("Please Wait...");
+                        if(!res.success){
+                            toast.dismiss(toastid);
+                            return toast.error(JSON.parse(res.error.message)[0].message , {duration : 1000});
+                        }
+
                         P2P_Transfer(amount , toUser).then((response)=>{
+                            toast.dismiss(toastid);
                             if (response.message === "success"){
                                 toast.success(`${response.message}` , {duration : 2000});
                             }

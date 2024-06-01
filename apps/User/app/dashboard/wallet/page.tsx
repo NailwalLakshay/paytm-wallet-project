@@ -28,9 +28,7 @@ export default function(){
         StartTime: Date;
     }[]>([])
 
-    const numberToShow = 5;
-
-    // const [status , setStatus] = useState("");
+    const numberToShow = 3;
 
     useEffect(()=>{
         UserBalance().then((res)=>{
@@ -49,7 +47,7 @@ export default function(){
 
     return(
         <div className="p-4 w-full flex flex-col gap-10">
-            <div className="font-bold text-4xl mt-10 text-purple-500">
+            <div className="font-bold text-4xl mt-10 text-blue-500">
                 <h1>PayTM@IIT WALLET</h1>
             </div>          
             <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -66,7 +64,7 @@ export default function(){
                     </div>    
                     <div>
                     <Card title="Pending Transaction">
-                        <Transaction classname="h-[200px] overflow-y-scroll overflow-x-hidden" label={"No Pending Transaction"} transaction={transaction} />    
+                        <Transaction classname="" label={"No Pending Transaction"} transaction={transaction} />    
                     </Card>      
                     </div>    
                 </div>    

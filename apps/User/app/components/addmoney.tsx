@@ -7,6 +7,7 @@ import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction"
 import toast from "react-hot-toast";
 import { useRecoilState} from "recoil";
 import { onRampTxn } from "../store/recoil";
+import { onRampTxnSchema } from "@repo/zodTypes/types";
 
 export const Addmoney=()=>{
 
@@ -31,9 +32,17 @@ export const Addmoney=()=>{
             }} options={options}/>
 
             <Button OnClick={()=>{
+
+                const res = onRampTxnSchema.safeParse({amount , provider});
+                let tokenId = toast.loading("Please Wait...");
+                if(!res.success){
+                    toast.dismiss(tokenId);
+                    return toast.error(JSON.parse(res.error.message)[0].message , {duration : 1000});
+                }
+
                 OnRampTransactionAction(amount , provider).then((res)=>{
+                    toast.dismiss(tokenId);
                     if(res.message != "fail"){
-                        toast.loading("Transfering to Bank Redirect Url || Please Wait..." , {duration : 4000});
                         setOnRampCheck(!onRampCheck);
                         window.open(redirectUrl || "" , "_blank")
                     }

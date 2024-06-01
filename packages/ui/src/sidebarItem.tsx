@@ -12,7 +12,7 @@ export const Sidebar = ({linkItem} : {linkItem : {
     const pathName = usePathname();
     return(
         <div className=" p-2 mt">
-            <button className={`flex gap-2 ${pathName === linkItem.link ? "text-purple-500 font-bold" : ""}`} onClick={()=>{
+            <button className={`flex gap-2 ${pathName === linkItem.link ? "text-blue-500 font-bold" : ""}`} onClick={()=>{
                 router.push(linkItem.link);
             }} >
                 {linkItem.icon}

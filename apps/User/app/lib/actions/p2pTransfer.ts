@@ -2,10 +2,18 @@
 
 import { authOptions } from "@repo/authoptions/auth"
 import { prisma } from "@repo/db/client";
+import { p2pTransferSchema } from "@repo/zodTypes/types";
 import { getServerSession } from "next-auth"
 import { redirect } from "next/navigation";
 
 export async function P2P_Transfer(amount : number, toUser : string ){
+
+    const res = p2pTransferSchema.safeParse({amount , toUser});
+    if(!res.success){
+        return {
+            message : "Invalid data"
+        }
+    }
 
     const session = await getServerSession(authOptions);
     if(!session?.user){
@@ -16,9 +24,11 @@ export async function P2P_Transfer(amount : number, toUser : string ){
 
     const toUserDetails = await prisma.user.findFirst({
         where : {
-            email : toUser
+            accountNumber : toUser
         }
     })
+
+
 
     if(!toUserDetails){
         return{

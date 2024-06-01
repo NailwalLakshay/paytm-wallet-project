@@ -24,7 +24,6 @@ export default function() {
 
     useEffect(()=>{
         p2pRecentTransaction(numberToShow).then((res)=>{
-            // console.log(res);
             if(res) setTransfers(res)
             else redirect("/api/auth/signin");
         })

@@ -2,7 +2,8 @@
   "name": "paytm_app",
   "private": true,
   "scripts": {
-    "build": "turbo build ",
+    "build-bank-webhook": "turbo build --filter=bank-webhook",
+    "build-User": "turbo build --filter=User",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
@@ -30,6 +31,7 @@
     "bcryptjs": "^2.4.3",
     "next-auth": "^4.24.7",
     "react-hot-toast": "^2.4.1",
-    "recoil": "^0.7.7"
+    "recoil": "^0.7.7",
+    "zod": "^3.23.8"
   }
 }

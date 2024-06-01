@@ -41,8 +41,6 @@ export const Transaction = ({transaction , label , classname} : {
             </div>
         )
     }
-
-    
     return (
 
         <div className= {classname}>

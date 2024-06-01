@@ -26,10 +26,15 @@ jobs:
                 push: true
                 tags : b21303/paytm-project:latest
             
-            - name : Verify Pushed Image
-              run : docker pull b21303/paytm-project:latest
+            - name : Build and Push Bank-webhook Image
+              uses : docker/build-push-action@v2
+              with :
+                context : .
+                file : ./docker/Dockerfile.bank-webhook
+                push : true
+                tags : b21303/bank-webhook:latest
 
-            - name: Deploy to EC2
+            - name: Deploy User app to EC2 instance
 
               uses: appleboy/ssh-action@master
               with:
@@ -42,3 +47,16 @@ jobs:
                     sudo docker stop paytm || true
                     sudo docker rm -f paytm || true
                     sudo docker run -p 3005:3000 --name paytm -d -e DATABASE_URL="${{secrets.DB_URL}}" -e GOOGLE_CLIENT_ID="${{secrets.GOOGLE_CLIENT_ID}}" -e GOOGLE_CLIENT_SECRET="${{secrets.GOOGLE_CLIENT_SECRET}}" -e NEXTAUTH_URL="${{secrets.NEXTAUTH_URL}}" -e NEXTAUTH_SECRET="${{secrets.NEXTAUTH_SECRET}}" b21303/paytm-project:latest
+            
+            - name: Deploy Bank-webhook to EC2 instance
+              uses : appleboy/ssh-action@master
+              with : 
+                host : ${{ secrets.AWS_SSH_HOST}}
+                username : ${{ secrets.AWS_SSH_USERNAME }}
+                key : ${{ secrets.AWS_SSH_KEY }}
+                script : |
+                    sudo docker pull b21303/bank-webhook:latest
+                    sudo docker images
+                    sudo docker stop bank-webhook || true
+                    sudo docker rm -f bank-webhook || true
+                    sudo docker run -p 3000:2000 --name bank-webhook -d -e DATABASE_URL="${{secrets.DB_URL}}" b21303/bank-webhook:latest

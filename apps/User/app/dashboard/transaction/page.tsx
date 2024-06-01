@@ -38,13 +38,13 @@ export default async function(){
 
     return(
         <div className="flex flex-col gap-10 p-4 w-full ">
-            <div className="font-bold text-4xl mt-10 text-purple-500">
+            <div className="font-bold text-4xl mt-10 text-blue-500">
                 <h1>OnRamp Transactions</h1>
             </div>
             <div>
                 <Transaction label="" transaction={transaction} classname="w-full"  />
             </div>
-            <div className="font-bold text-4xl mt-10 text-purple-500">
+            <div className="font-bold text-4xl mt-10 text-blue-500">
                 <h1>P2P Transactions</h1>
             </div>
             <div>

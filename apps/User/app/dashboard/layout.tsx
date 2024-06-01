@@ -24,8 +24,8 @@ export default async function RootLayout({
   }
   
   return (
-        <div className="flex w-full min-h-screen">
-            <div className="sm:min-w-[250px] border-r-2 p-2">
+        <div className="flex w-full">
+            <div className="sm:min-w-[250px] border-r-2 p-2 min-h-[85vh]">
                 {Links.map((item) : any=>{
                     return <Sidebar linkItem = {item} />
                 })}

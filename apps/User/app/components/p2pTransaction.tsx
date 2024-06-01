@@ -50,18 +50,15 @@ export const P2P_Transaction = ({transaction , label , classname} : {
         })
     })
 
-
-    if(transaction.length == 0){
-        return (
-            <Card title={label}>
-                <></>
-            </Card>
-        )
-    }
-
     return (
         <div className="flex flex-col gap-4">
-            <Card title="Recent P2P Transactions">
+            <Card title="Recent P2P Transfers">
+            {(transaction.length == 0) ? 
+            <div>
+                {label}
+            </div>
+            :
+
             <div className={`${classname}`} >
                 
                 {transaction.map((item)=>{
@@ -76,6 +73,7 @@ export const P2P_Transaction = ({transaction , label , classname} : {
                 </div>
                 })}
             </div>
+            }
             </Card>
         </div>
     )

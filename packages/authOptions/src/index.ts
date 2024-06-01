@@ -3,10 +3,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from 'next-auth/providers/google';
 import bcrypt from "bcrypt";
 import {prisma} from "@repo/db/client";
-// import { PrismaAdapter } from "@auth/prisma-adapter";
-// const PrismaAdapter = require("@auth/prisma-adapter").PrismaAdapter;
 
-// const {PrismaAdapter} = require(`@auth/prisma-adapter`);
+import { userLoginSchema } from "@repo/zodTypes/types";
+
+const validateEmail = (email : string , password : string) => {
+    const res = userLoginSchema.safeParse({email : email , password :password })    
+    return res.success
+}
 
 export const authOptions = ({
     // adapter : PrismaAdapter(prisma),
@@ -20,8 +23,13 @@ export const authOptions = ({
 
             async authorize(credentials : any){
 
+                if(!validateEmail(credentials.email , credentials.password)){
+                    return null // ("Invalid Email or Password");
+                }
+
                 // console.log("nextauth-url : ", process.env.NEXTAUTH_URL)
                 // db check for credentials
+
                 const hashedPassword = await bcrypt.hash(credentials.password , 10);
                 
                 const existingUser = await prisma.user.findFirst({
@@ -43,6 +51,7 @@ export const authOptions = ({
                 }
 
                 try {
+
                     const newUser = await prisma.user.create({
                         data : {
                             email : credentials.email,
@@ -87,6 +96,9 @@ export const authOptions = ({
         }    
     },
     secret : process.env.NEXTAUTH_SECRECT || "secret",
+    pages : {
+        "signIn" : "/auth/signin",
+    }
     
 
 })
