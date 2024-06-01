@@ -5,16 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start" : "node dist/index.js",
+    "start": "node dist/index.js",
     "build": "npx esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js",
-    "dev" : "npx esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js && node dist/index.js"
+    "dev": "npx esbuild src/index.ts --bundle --platform=node --outfile=dist/index.js && node dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@repo/db": "*",
+    "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
+    "cors": "^2.8.5",
     "express": "^4.19.2"
   },
   "devDependencies": {

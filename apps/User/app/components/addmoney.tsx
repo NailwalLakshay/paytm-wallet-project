@@ -42,12 +42,16 @@ export const Addmoney=()=>{
 
                 OnRampTransactionAction(amount , provider).then((res)=>{
                     toast.dismiss(tokenId);
-                    if(res.message != "fail"){
+                    if(res.data){
                         setOnRampCheck(!onRampCheck);
+                        if(redirectUrl === "https://mybank.lakshaynailwaldevs.top"){
+                            window.open(`${redirectUrl}?token=${res.data}` || "" , "_blank")
+                        }   
                         window.open(redirectUrl || "" , "_blank")
                     }
                     else{
-                        toast.error("Transaction failed || Please retry after some time" , {duration : 4000})
+                        // console.log(res.message)/
+                        toast.error(res.message , {duration : 4000})
                     }
                 });
 
@@ -66,5 +70,10 @@ const options = [
         key : "AXIS BANK",
         value : "AXIS BANK",
         redirectUrl:"https://www.axisbank.com/"
+    },
+    {
+        key : "My Local Bank",
+        value : "My Local Bank",
+        redirectUrl : "https://mybank.lakshaynailwaldevs.top"
     }
 ]

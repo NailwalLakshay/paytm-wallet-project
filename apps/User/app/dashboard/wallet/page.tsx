@@ -34,7 +34,7 @@ export default function(){
         UserBalance().then((res)=>{
             if(res) setBalance(res);
         })
-    })
+    } , [])
 
     useEffect(()=>{
 

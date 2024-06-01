@@ -1,8 +1,12 @@
 import express from 'express';
 import {prisma} from "@repo/db/client";
-
+import cors from "cors";
 
 const app = express();
+app.use(cors({
+    origin : "https://myBank.lakshaynailwaldevs.top",
+    methods: ['GET', 'POST', 'PUT', 'DELETE']
+}))
 
 app.use(express.json());
 
@@ -16,6 +20,14 @@ app.post("/", async (req,res)=>{
         token : req.body.token,
         userId : req.body.userId,
         amount : req.body.amount
+    }
+
+    // console.log(paymentInformation)
+
+    if(!paymentInformation.token || !paymentInformation.userId || !paymentInformation.amount){
+        return res.status(400).json({
+            message : "Invalid data"
+        })
     }
 
     try {

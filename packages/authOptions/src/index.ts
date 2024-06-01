@@ -87,7 +87,6 @@ export const authOptions = ({
     callbacks : {
         async session({session , token , user}:any){     
             session.user.id = token.sub
-            console.log(session)       
             return session 
         },
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>        
+        
+        <h1 style="font-size: 40px; color : rgb(0, 110, 235)">My Bank Server</h1>
+        <!-- <h1>Status <%= status %></h1>
+        <h1>Status <%= token %></h1>
+        <h1>Status <%= userId %></h1>
+        <h1>Status <%= amount %></h1> -->
+        <button style="padding: 10px ; border-radius : 10px ; font-size:15px; background-color : black ; color : white" onclick="postreq()" >Proceed</button>
+
+        <script>
+            const token = "<%= token %>";
+            const amount = "<%= amount %>";
+            const user = "<%= userId %>";
+            const body = JSON.stringify({
+                token: token,
+                userId : user,
+                amount: amount
+            });
+
+            function postreq(){
+                fetch("http://localhost:2000" , {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Content-Length": body.length
+                    },
+                    body
+                }).then(async (res)=>{
+                    const data = await res.json();
+                    alert(data.message);
+                }).catch((err)=>{
+                    console.log("error" , err)
+                })
+            }
+        </script>
+
+
+    </body>
+</html>

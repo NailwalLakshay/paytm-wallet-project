@@ -4,43 +4,60 @@ import { authOptions } from "@repo/authoptions/auth"
 import { prisma } from "@repo/db/client";
 import { onRampTxnSchema } from "@repo/zodtypes/types";
 import { getServerSession } from "next-auth"
+import axios from "axios";
 
 export const OnRampTransactionAction = async(amount : number , provider : string)=>{
-
+    console.log("heelo");
     const session =  await getServerSession(authOptions);
     if(!session?.user) {
         return {
-            message : "user not logged in"
+            message : "User not logged in",
+            data : null
         }
     }
 
     const res = onRampTxnSchema.safeParse({amount , provider});
     if(!res.success) {
         return {
-            message : "Invalid data"
+            message : "Invalid data",
+            data : null
         }
     }
-
-    try {
-        const token = String(Math.random()*100); // generally we hit here the bank api
     
+    try {
+        // const token = Math.random().toString(36).substring(7);
+        // console.log("token = " , token.data)
+        const token = await axios.post("http://localhost:4000/genToken",{
+            amount,
+            userId : session?.user?.id
+        })
+
+
+        if(token.data.status !== 200) {
+            throw ({message  : "Internal Server Error"})
+        }
+
         await prisma.onRampTransaction.create({
             data: {
                 userId : Number(session?.user?.id),
                 amount,
                 Provider : provider,
-                token : token,
+                token : token.data.data,
                 StartTime : new Date,
                 Status : "PENDING",
             }
         });
+
         return {
-            message : "Transaction initiated successfully"
+            message : "Transaction initiated successfully",
+            data : token.data.data
         }
+        
     } catch (error) {
         return {
-            message : "fail"
-        }
+            message: (error as Error).message,
+            data: null
+        };
     }
 
 }

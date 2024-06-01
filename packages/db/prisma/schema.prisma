@@ -17,6 +17,7 @@ model User {
   sentTransfers P2P_TRANSFER[] @relation(name: "fromUserRelation")
   receivedTransfer P2P_TRANSFER[] @relation(name : "toUserRelation")
   accountNumber String @unique @default(uuid())
+  token token[]
 }
 
 model Balance {
@@ -47,6 +48,15 @@ model OnRampTransaction{
   StartTime DateTime
   token String @unique
   user User @relation(fields: [userId] , references: [id])
+}
+
+model token{
+  id Int @id @default(autoincrement())
+  token String @unique
+  amount Int
+  userId Int 
+  user User @relation(fields: [userId] , references: [id])
+  status OnRampStatus
 }
 
 enum OnRampStatus {

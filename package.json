@@ -4,12 +4,15 @@
   "scripts": {
     "build-bank-webhook": "turbo build --filter=bank-webhook",
     "build-user": "turbo build --filter=user",
+    "build-bank" : "turbo build --filter=bank",
+    "build" : "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "cd packages/db && npx prisma generate && cd ../..",
     "start-user-app": "cd ./apps/User && npm run start",
-    "start-bank-webhook": "cd ./apps/bank-webhook && npm run start"
+    "start-bank-webhook": "cd ./apps/bank-webhook && npm run start",
+    "start-bank-app" : "cd ./apps/bank && npm run start"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
