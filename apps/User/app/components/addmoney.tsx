@@ -47,10 +47,10 @@ export const Addmoney=()=>{
                         if(redirectUrl === "https://mybank.lakshaynailwaldevs.top"){
                             window.open(`${redirectUrl}?token=${res.data}` || "" , "_blank")
                         }   
-                        window.open(redirectUrl || "" , "_blank")
+                        else 
+                            window.open(redirectUrl || "" , "_blank")
                     }
                     else{
-                        // console.log(res.message)/
                         toast.error(res.message , {duration : 4000})
                     }
                 });

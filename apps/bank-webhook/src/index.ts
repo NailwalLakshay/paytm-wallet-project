@@ -4,7 +4,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({
-    origin : "https://myBank.lakshaynailwaldevs.top",
+    origin : "https://mybank.lakshaynailwaldevs.top",
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }))
 
