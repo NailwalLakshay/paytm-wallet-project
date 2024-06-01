@@ -51,7 +51,7 @@ jobs:
             - name: Deploy Bank-webhook to EC2 instance
               uses : appleboy/ssh-action@master
               with : 
-                host : ${{ secrets.AWS_SSH_HOST}}
+                host : ${{ secrets.Bank_Web_AWS_HOST}}
                 username : ${{ secrets.AWS_SSH_USERNAME }}
                 key : ${{ secrets.AWS_SSH_KEY }}
                 script : |
