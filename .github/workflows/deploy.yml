@@ -30,7 +30,7 @@ jobs:
               uses : docker/build-push-action@v2
               with :
                 context : .
-                file : ./docker/Dockerfile.bank-webhook
+                file : ./docker/Dockerfile.bank-Webhook
                 push : true
                 tags : b21303/bank-webhook:latest
 

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build-bank-webhook": "turbo build --filter=bank-webhook",
-    "build-User": "turbo build --filter=User",
+    "build-user": "turbo build --filter=user",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
