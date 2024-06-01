@@ -9,7 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "exports" : {
-    "./types" : "./src/index.ts"
+  "exports": {
+    "./types": "./src/index.ts"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
   }
 }
