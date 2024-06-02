@@ -3,21 +3,50 @@
 
 import { Transaction } from "../../components/transaction";
 import { P2P_Transaction } from "../../components/p2pTransaction";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { AllOnRampTxn, AllP2pTxn, getNextOnRampTxn, getNextP2pTxn, isLoadingAllOnRamp, isLoadingAllP2p } from "../../store/recoil";
+import { useRecoilState} from "recoil";
+import { getNextOnRampTxn, getNextP2pTxn, isLoadingAllOnRamp, isLoadingAllP2p } from "../../store/recoil";
 import { Button } from "@repo/ui/button";
 import { Loader } from "../../components/loader";
+import { useEffect, useState } from "react";
+import { p2pRecentTransaction, UserAllOnRampTransaction } from "../../lib/helpers/helperfxn";
 
 export default function(){
-    
-    const transaction = useRecoilValue(AllOnRampTxn);
-    const transfer = useRecoilValue(AllP2pTxn);
 
     const [OnRampPtr , setOnRampPtr] = useRecoilState(getNextOnRampTxn);
-
     const [P2pTxnPtr , setP2pTxnPtr] = useRecoilState(getNextP2pTxn);
-    const isLoadingOnRamp = useRecoilValue(isLoadingAllOnRamp);
-    const isLoadingP2p = useRecoilValue(isLoadingAllP2p);
+
+    const [isLoadingOnRamp , setIsLoadingOnRamp] = useRecoilState(isLoadingAllOnRamp);
+    const [isLoadingP2p , setIsLoadingP2p] = useRecoilState(isLoadingAllP2p);
+
+    const [txn , setTxn] = useState<{
+        amount: number;
+    Provider: string;
+    Status: string;
+    StartTime: Date;
+    }[]>([]);
+
+    const [tsx , setTsx] = useState<{id: number;
+        startDate: Date;
+        amount: number;
+        fromUserId: number;
+        toUserId: number;
+        status: string;}[]>([]);
+
+    useEffect(()=>{
+        setIsLoadingOnRamp(true);
+        UserAllOnRampTransaction(11 , OnRampPtr ).then((res)=>{
+            if(res) setTxn(res);
+            setIsLoadingOnRamp(false);
+        })
+    } , [OnRampPtr]);
+
+    useEffect(()=>{
+        setIsLoadingP2p(true);
+        p2pRecentTransaction(11 , P2pTxnPtr).then((res)=>{
+            if(res) setTsx(res);
+            setIsLoadingP2p(false);
+        })
+    } , [P2pTxnPtr]);
 
     return(
         <div className="grid grid-cols-1 gap-10 p-4 w-full ">
@@ -37,12 +66,12 @@ export default function(){
                         </div>
                     </div> : 
                     <div>
-                    <Transaction label="" transaction={transaction} classname="w-full"  />
+                    <Transaction label="" transaction={txn} classname="w-full"  />
                         <div className=" flex gap-2">
                         { <Button disabled={OnRampPtr<10} OnClick={()=>{
                             setOnRampPtr(OnRampPtr-10);
                         }} className="bg-black text-white p-2 rounded-lg">Prev</Button>}
-                        { <Button disabled={transaction.length < 10 } OnClick={()=>{
+                        { <Button disabled={txn.length < 10 } OnClick={()=>{
                             setOnRampPtr(OnRampPtr+10);
                         }}className="bg-black text-white p-2 rounded-lg">Next</Button>}
                         </div>
@@ -66,12 +95,12 @@ export default function(){
                     </div>
                 </div> : 
                     <div>
-                        <P2P_Transaction classname="" label="" transaction={transfer} />
+                        <P2P_Transaction classname="" label="" transaction={tsx} />
                         <div className="flex gap-2">
                         { <Button disabled={P2pTxnPtr<10} OnClick={()=>{
                             setP2pTxnPtr(P2pTxnPtr-10);
                         }} className="bg-black text-white p-2 rounded-lg">Prev</Button>}
-                        { <Button disabled={transfer.length < 10} OnClick={()=>{
+                        { <Button disabled={tsx.length < 10} OnClick={()=>{
                             setP2pTxnPtr(P2pTxnPtr+10);
                         }} className="bg-black text-white p-2 rounded-lg">Next</Button>}
                         </div>

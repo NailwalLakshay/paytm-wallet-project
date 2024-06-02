@@ -28,7 +28,7 @@ export const OnRampTransactionAction = async(amount : number , provider : string
         // const token = Math.random().toString(36).substring(7);
         // console.log("token = " , token.data)
         const url = "https://mybank.lakshaynailwaldevs.top/genToken"
-        const token = await axios.post("http://localhost:4000/genToken",{
+        const token = await axios.post(url,{
             amount,
             userId : session?.user?.id
         })

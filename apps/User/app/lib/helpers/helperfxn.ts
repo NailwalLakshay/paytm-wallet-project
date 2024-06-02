@@ -17,21 +17,26 @@ export const p2pRecentTransaction = async( numberToShow? : number , skip? :numbe
     if(!session){
         return null;
     }
-    const transfers = await prisma.p2P_TRANSFER.findMany({
-        take : numberToShow,
-        skip : skip,
-        where : {
-            OR : [
-                {fromUserId : parseInt(session?.user?.id)},
-                {toUserId : parseInt(session?.user?.id)},
-            ],
-        },
-        orderBy: {
-            startDate : "desc"
-        }
-    })
-
-    return transfers
+    try {
+        const transfers = await prisma.p2P_TRANSFER.findMany({
+            take : numberToShow,
+            skip : skip,
+            where : {
+                OR : [
+                    {fromUserId : parseInt(session?.user?.id)},
+                    {toUserId : parseInt(session?.user?.id)},
+                ],
+            },
+            orderBy: {
+                startDate : "desc"
+            }
+        })
+    
+        return transfers
+    } catch (error) {
+        console.log(error);
+        return null       
+    }
 }
 
 
@@ -41,33 +46,43 @@ export const UserBalance = async()=>{
         return null;
     }
 
-    const balance = await prisma.balance.findFirst({
-        where : {
-            userId : Number(session.user.id)
-        },
-        select : {
-            amount : true,
-            locked:true,
-        }
-    })
-
-    return balance;
+    try {
+        const balance = await prisma.balance.findFirst({
+            where : {
+                userId : Number(session.user.id)
+            },
+            select : {
+                amount : true,
+                locked:true,
+            }
+        })
+    
+        return balance;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
 }
 
 export const UserDetails = async()=>{
     const session = await checkSessionOnserver();
     if(!session){
         return null;
+    }   
+    try {
+        const user = await prisma.user.findFirst({
+            where : {
+                id : parseInt(session.user.id)
+            }
+        })
+    
+        return user
+    
+    } catch (error) {
+        console.log(error);
+        return null;  
     }
-
-    const user = await prisma.user.findFirst({
-        where : {
-            id : parseInt(session.user.id)
-        }
-    })
-
-    return user
-
+   
 }
 
 
@@ -78,24 +93,29 @@ export const UserOnRampTransaction = async(numberToShow? : number)=>{
         return null;
     }
 
-    const transaction = await prisma.onRampTransaction.findMany({
-        take : numberToShow,
-        where : {
-            userId : parseInt(session.user.id),
-            Status : "PENDING"
-        },
-        select : {
-            StartTime : true,
-            amount : true,
-            Status : true,
-            Provider : true
-        },
-        orderBy : {
-            StartTime : "desc"
-        }
-    })
-
-    return transaction
+    try {
+        const transaction = await prisma.onRampTransaction.findMany({
+            take : numberToShow,
+            where : {
+                userId : parseInt(session.user.id),
+                Status : "PENDING"
+            },
+            select : {
+                StartTime : true,
+                amount : true,
+                Status : true,
+                Provider : true
+            },
+            orderBy : {
+                StartTime : "desc"
+            }
+        })
+    
+        return transaction
+    } catch (error) {
+       console.log(error);
+        return null; 
+    }
 }
 export const UserAllOnRampTransaction = async(numberToShow? : number , skip? : number)=>{
     
@@ -104,24 +124,29 @@ export const UserAllOnRampTransaction = async(numberToShow? : number , skip? : n
         return null;
     }
 
-    const transaction = await prisma.onRampTransaction.findMany({
-        take : numberToShow,
-        skip : skip,
-        where : {
-            userId : parseInt(session.user.id),
-        },
-        select : {
-            StartTime : true,
-            amount : true,
-            Status : true,
-            Provider : true
-        },
-        orderBy : {
-            StartTime : "desc"
-        }
-    })
-
-    return transaction
+    try {
+        const transaction = await prisma.onRampTransaction.findMany({
+            take : numberToShow,
+            skip : skip,
+            where : {
+                userId : parseInt(session.user.id),
+            },
+            select : {
+                StartTime : true,
+                amount : true,
+                Status : true,
+                Provider : true
+            },
+            orderBy : {
+                StartTime : "desc"
+            }
+        })
+    
+        return transaction
+    } catch (error) {
+         console.log(error);
+          return null;   
+    }
 }
 
 export const removePendingTransaction = async()=>{

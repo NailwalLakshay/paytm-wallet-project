@@ -24,6 +24,7 @@ export const PendingOnRampTxn = atom({
     key : "PendingOnRampTxn",
     default : <{ amount: number; Provider: string; Status: string; StartTime: Date; }[]>[]
 })
+
 export const PendingP2pTxn = atom({
     key : "PendingP2pTxn",
     default : <{id: number;
@@ -96,20 +97,79 @@ export const UserDetailsStore = atom({
 
 export const isLoadingAllOnRamp = atom({
     key : "isLoadingAllOnRamp",
-    default : true
+    default : false
 })
 
 export const isLoadingAllP2p = atom({
     key : "isLoadingAllP2p",
-    default : true
+    default : false
 })
 
 export const isLoadingPendingOnRamp = atom({
     key : "isLoadingPendingOnRamp",
-    default : true
+    default : false
 })
 
 export const isLoadingPendingP2p = atom({
     key : "isLoadingPendingP2p",
-    default : true
+    default : false
 })
+
+// export const getUserDetailsSelector = selector({
+//     key : "getUserDetailsSelector",
+//     get : async () => {
+//         const res = await UserDetails();
+//         if(!res) return null;
+//         return res;
+//     },
+// })
+
+// export const getBalanceSelector = selector({
+//     key : "getBalanceSelector",
+//     get : async ({get}) => {
+//         const rest = get(BalanceToggler);
+//         const res = await UserBalance();
+//         if(!res) return null;
+//         return res;
+//     },
+// });
+// export const getPendingP2pTxnSelector = selector({
+//     key : "getPendingP2pTxnSelector",
+//     get : async ({get}) => {
+//         const rest = get(BalanceToggler);
+//         const res = await p2pRecentTransaction(3);
+//         if(!res) return null;
+//         return res;
+//     },
+// });
+
+// export const getPendingOnRampTxnSelector = selector({
+//     key : "getPendingOnRampTxnSelector",
+//     get : async ({get}) => {
+//         const rest = get(getPendingToggler);
+//         const res = await UserOnRampTransaction(3);
+//         if(!res) return null;
+//         return res;
+//     },
+// });
+
+// export const getAllOnRampTxnSelector = selector({
+//     key : "getAllOnRampTxnSelector",
+//     get : async ({get}) => {
+//         const next = get(getNextOnRampTxn);
+//         const res = await UserAllOnRampTransaction(11 , next);
+//         if(!res) return null;
+//         return res;
+//     },
+// });
+
+// export const getAllP2pTxnSelector = selector({
+//     key : "getAllP2pTxnSelector",
+//     get : async ({get}) => {
+//         const next = get(getNextP2pTxn);
+//         const rest = get(BalanceToggler);
+//         const res = await p2pRecentTransaction(11 , next);
+//         if(!res) return null;
+//         return res;
+//     },
+// });

@@ -3,15 +3,34 @@
 import { P2P_Transaction } from "../../components/p2pTransaction";
 import { SendMoney } from "../../components/sendmoney";
 import { useRecoilValue } from "recoil";
-import { isLoadingPendingP2p, PendingP2pTxn } from "../../store/recoil";
+import { BalanceToggler} from "../../store/recoil";
 import { Card } from "@repo/ui/card";
 import { Loader } from "../../components/loader";
-
+import { useEffect, useState } from "react";
+import { p2pRecentTransaction } from "../../lib/helpers/helperfxn";
+import {} from "@repo/zodtypes/types"
 
 export default function() {
 
-    const transfers = useRecoilValue(PendingP2pTxn);
-    const isLoading = useRecoilValue(isLoadingPendingP2p);
+    const [txn , setTxn] = useState<{
+        id: number;
+        startDate: Date;
+        amount: number;
+        fromUserId: number;
+        toUserId: number;
+        status: string;
+    }[]>([]);
+    
+    const [isLoading , setIsLoading] = useState(true);
+    const toggler = useRecoilValue(BalanceToggler);
+
+    useEffect(()=>{
+        setIsLoading(true);
+        p2pRecentTransaction().then((res)=>{
+            if(res) setTxn(res);
+            setIsLoading(false);
+        })
+    } , [toggler]);
 
     return(
     <div className="w-full p-4 mt-10">
@@ -23,7 +42,7 @@ export default function() {
                         <Loader classname="w-full"/>
                         <Loader classname="w-full"/>
                     </div> : 
-                <P2P_Transaction classname="h-[400px] overflow-x-hidden " transaction={transfers} label="No Recent Transfers" />
+                <P2P_Transaction classname="h-[400px] overflow-x-hidden " transaction={txn} label="No Recent Transfers" />
                 }
             </Card>
         </div>

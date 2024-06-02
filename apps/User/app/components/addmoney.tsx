@@ -7,6 +7,8 @@ import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction"
 import toast from "react-hot-toast";
 import { onRampTxnSchema } from "@repo/zodtypes/types";
 
+const url = "https://mybank.lakshaynailwaldevs.top";
+
 export const Addmoney=()=>{
 
     const [amount , setAmount] = useState(0);
@@ -39,7 +41,7 @@ export const Addmoney=()=>{
                 OnRampTransactionAction(amount , provider).then((res)=>{
                     toast.dismiss(tokenId);
                     if(res.data){
-                        if(redirectUrl === "http://localhost:4000"){
+                        if(redirectUrl === url){
                             window.location.href = `${redirectUrl}?token=${res.data}`
                         }   
                         else 
@@ -59,7 +61,7 @@ const options = [
     {
         key : "My Local Bank",
         value : "My Local Bank",
-        redirectUrl : "http://localhost:4000"
+        redirectUrl : url
     },
     {
         key : "HDFC BANK",
@@ -72,5 +74,3 @@ const options = [
         redirectUrl:"https://www.axisbank.com/"
     },
 ]
-
-const url = "https://mybank.lakshaynailwaldevs.top";

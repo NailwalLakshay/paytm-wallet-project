@@ -16,15 +16,15 @@ export default function (){
             <div>
                 <h1 className="font-bold text-4xl mt-10 text-blue-500">Paytm@IIT Dashboard</h1>
             </div>
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 ">
-                <Card title="Available Balance " classname="bg-gray-100 rounded-lg md:min-w-[400px]">
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-4 ">
+                <Card title="Available Balance " classname="bg-gray-100 rounded-lg ">
                  {Balance?.amount >=0 ?   <div>
                         Rs {Balance?.amount}
                     </div>:
                     <Loader classname="w-full"/>}
                 
                 </Card>
-                <Card title="Account Details" classname="bg-gray-100 rounded-lg md:min-w-[400px]">
+                <Card title="Account Details" classname="bg-gray-100 rounded-lg ">
                 
                     <div>
                         <h1 className="flex flex-col">

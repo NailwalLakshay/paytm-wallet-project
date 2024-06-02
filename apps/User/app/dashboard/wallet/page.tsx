@@ -3,17 +3,33 @@ import { Card } from "@repo/ui/card";
 import { Addmoney } from "../../components/addmoney";
 import { Balance } from "../../components/balance";
 import { Transaction } from "../../components/transaction";
-import { useRecoilValue } from "recoil";
-import { BalanceData, isLoadingPendingOnRamp, PendingOnRampTxn } from "../../store/recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { BalanceData, isLoadingPendingOnRamp } from "../../store/recoil";
 import { Loader } from "../../components/loader";
+import { useEffect, useState } from "react";
+import { UserOnRampTransaction } from "../../lib/helpers/helperfxn";
 
 
 export default function(){
 
     const balance = useRecoilValue(BalanceData);
-    const transaction = useRecoilValue(PendingOnRampTxn);
 
-    const isLoading = useRecoilValue(isLoadingPendingOnRamp);
+    const [txn , setTxn] = useState<{
+        amount: number;
+        Provider: string;
+        Status: string;
+        StartTime: Date;
+    }[]>([]);
+
+    const [isLoading , setIsLoading ] = useRecoilState(isLoadingPendingOnRamp);
+    useEffect(()=>{
+        setIsLoading(true);
+        UserOnRampTransaction(4).then((res)=>{
+            if(res) setTxn(res);
+            setIsLoading(false);
+        })
+    } , []);
+
 
     return(
         <div className="p-4 w-full flex flex-col gap-10">
@@ -45,7 +61,7 @@ export default function(){
                         <Loader classname="w-full"/>
                         <Loader classname="w-full"/>
                     </div> : 
-                        <Transaction classname="" label={"No Pending Transaction"} transaction={transaction} />    
+                        <Transaction classname="" label={"No Pending Transaction"} transaction={txn} />    
                         }
                     </Card>      
                     </div>    

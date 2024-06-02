@@ -30,7 +30,8 @@
             const url = "https://bankwebhook.lakshaynailwaldevs.top";
 
             function postreq(){
-                fetch("http://localhost:2000" , {
+                alert("Transaction in progress");
+                fetch(url , {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
