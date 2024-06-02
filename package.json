@@ -10,6 +10,7 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "db:generate": "cd packages/db && npx prisma generate && cd ../..",
+    "db:migrate": "cd packages/db && npx prisma migrate dev && cd ../..",
     "start-user-app": "cd ./apps/User && npm run start",
     "start-bank-webhook": "cd ./apps/bank-webhook && npm run start",
     "start-bank-app" : "cd ./apps/bank && npm run start"

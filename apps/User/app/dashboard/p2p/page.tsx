@@ -8,7 +8,6 @@ import { Card } from "@repo/ui/card";
 import { Loader } from "../../components/loader";
 import { useEffect, useState } from "react";
 import { p2pRecentTransaction } from "../../lib/helpers/helperfxn";
-import {} from "@repo/zodtypes/types"
 
 export default function() {
 
@@ -26,14 +25,14 @@ export default function() {
 
     useEffect(()=>{
         setIsLoading(true);
-        p2pRecentTransaction().then((res)=>{
+        p2pRecentTransaction(4).then((res)=>{
             if(res) setTxn(res);
             setIsLoading(false);
         })
     } , [toggler]);
 
     return(
-    <div className="w-full p-4 mt-10">
+    <div className="w-full p-4 mt-10 ">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <SendMoney />
             <Card title="P2P Recent Transfers">
