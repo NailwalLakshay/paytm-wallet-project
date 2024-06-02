@@ -5,8 +5,6 @@ import { useState } from "react";
 import { Button } from "@repo/ui/button";
 import { OnRampTransactionAction } from "../lib/actions/onRampTransactionAction";
 import toast from "react-hot-toast";
-import { useRecoilState} from "recoil";
-import { onRampTxn } from "../store/recoil";
 import { onRampTxnSchema } from "@repo/zodtypes/types";
 
 export const Addmoney=()=>{
@@ -15,11 +13,9 @@ export const Addmoney=()=>{
     const [redirectUrl , setRedirectUrl] = useState(options[0]?.redirectUrl || "");
     const [provider , setProvider] = useState(options[0]?.value || "")
 
-    const [onRampCheck , setOnRampCheck] =  useRecoilState(onRampTxn);
-
     return (
         <div>
-            <TextInput label="Amount" type="number" placeholder="$1000" onChange={(value)=>{
+            <TextInput label="Amount" type="number" placeholder="RS 1000" onChange={(value)=>{
                 setAmount(parseInt(value))
             }} /> 
             
@@ -43,12 +39,11 @@ export const Addmoney=()=>{
                 OnRampTransactionAction(amount , provider).then((res)=>{
                     toast.dismiss(tokenId);
                     if(res.data){
-                        setOnRampCheck(!onRampCheck);
-                        if(redirectUrl === "https://mybank.lakshaynailwaldevs.top"){
-                            window.open(`${redirectUrl}?token=${res.data}` || "" , "_blank")
+                        if(redirectUrl === "http://localhost:4000"){
+                            window.location.href = `${redirectUrl}?token=${res.data}`
                         }   
                         else 
-                            window.open(redirectUrl || "" , "_blank")
+                            window.location.href = redirectUrl ;
                     }
                     else{
                         toast.error(res.message , {duration : 4000})
@@ -62,6 +57,11 @@ export const Addmoney=()=>{
 
 const options = [
     {
+        key : "My Local Bank",
+        value : "My Local Bank",
+        redirectUrl : "http://localhost:4000"
+    },
+    {
         key : "HDFC BANK",
         value : "HDFC BANK",
         redirectUrl : "https://netbanking.hdfcbank.com"
@@ -71,9 +71,6 @@ const options = [
         value : "AXIS BANK",
         redirectUrl:"https://www.axisbank.com/"
     },
-    {
-        key : "My Local Bank",
-        value : "My Local Bank",
-        redirectUrl : "https://mybank.lakshaynailwaldevs.top"
-    }
 ]
+
+const url = "https://mybank.lakshaynailwaldevs.top";

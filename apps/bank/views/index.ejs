@@ -27,8 +27,10 @@
                 amount: amount
             });
 
+            const url = "https://bankwebhook.lakshaynailwaldevs.top";
+
             function postreq(){
-                fetch("https://bankwebhook.lakshaynailwaldevs.top" , {
+                fetch("http://localhost:2000" , {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",

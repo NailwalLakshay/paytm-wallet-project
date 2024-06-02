@@ -34,28 +34,28 @@ export const Transaction = ({transaction , label , classname} : {
     classname : string
 })=>{
 
-    if(transaction.length == 0){
-        return (
-            <div>
-                {label}
-            </div>
-        )
-    }
     return (
-
+        <>
+        {(transaction.length) === 0 ?
+            <div> 
+                {label}
+            </div> 
+        :
         <div className= {classname}>
-            {transaction.map((item)=>{
-                return <div className="flex justify-between mb-2 ">
+                {transaction.map((item)=>{
+                    return <div className="flex justify-between mb-2 ">
                     <div>
-                        <h1 className="flex gap-1"> { 
-                            checkStatusIcon(item.Status)
-                        }Received INR</h1>
-                        <h1>{item.StartTime.toDateString()}</h1>
+                    <h1 className="flex gap-1"> { 
+                        checkStatusIcon(item.Status)
+                    }Received INR</h1>
+                    <h1>{item.StartTime.toDateString()}</h1>
                     </div>
                     <div className="text-xl">+Rs {item.amount}</div>
-                </div>
-            })}
-        </div>
-    )
+                    </div>
+                })}
+            </div>
+        }
+        </>
+        )
 
 }

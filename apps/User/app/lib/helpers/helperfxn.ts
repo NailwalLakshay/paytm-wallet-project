@@ -12,13 +12,14 @@ export const checkSessionOnserver = async()=>{
     return session;
 }
 
-export const p2pRecentTransaction = async( numberToShow? : number )=>{
+export const p2pRecentTransaction = async( numberToShow? : number , skip? :number)=>{
     const session = await checkSessionOnserver();
     if(!session){
         return null;
     }
     const transfers = await prisma.p2P_TRANSFER.findMany({
         take : numberToShow,
+        skip : skip,
         where : {
             OR : [
                 {fromUserId : parseInt(session?.user?.id)},
@@ -94,5 +95,53 @@ export const UserOnRampTransaction = async(numberToShow? : number)=>{
         }
     })
 
+    return transaction
+}
+export const UserAllOnRampTransaction = async(numberToShow? : number , skip? : number)=>{
+    
+    const session = await checkSessionOnserver();
+    if(!session){
+        return null;
+    }
+
+    const transaction = await prisma.onRampTransaction.findMany({
+        take : numberToShow,
+        skip : skip,
+        where : {
+            userId : parseInt(session.user.id),
+        },
+        select : {
+            StartTime : true,
+            amount : true,
+            Status : true,
+            Provider : true
+        },
+        orderBy : {
+            StartTime : "desc"
+        }
+    })
+
+    return transaction
+}
+
+export const removePendingTransaction = async()=>{
+
+    const session = await checkSessionOnserver();
+    if(!session){
+        return null;
+    }
+
+    const transaction = await prisma.onRampTransaction.updateMany({
+        where : {
+            userId : parseInt(session.user.id),
+            Status : "PENDING",
+            StartTime : {
+                lte : new Date(new Date().getTime() - 1000*60*60*2)
+            }
+        },
+        data : {
+            Status : "FAILED"
+        }
+    })
     return transaction
 }

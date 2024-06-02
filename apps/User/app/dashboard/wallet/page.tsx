@@ -3,47 +3,17 @@ import { Card } from "@repo/ui/card";
 import { Addmoney } from "../../components/addmoney";
 import { Balance } from "../../components/balance";
 import { Transaction } from "../../components/transaction";
-import { useEffect, useState } from "react";
-import { UserBalance, UserOnRampTransaction } from "../../lib/helpers/helperfxn";
 import { useRecoilValue } from "recoil";
-import { onRampTxn } from "../../store/recoil";
+import { BalanceData, isLoadingPendingOnRamp, PendingOnRampTxn } from "../../store/recoil";
+import { Loader } from "../../components/loader";
 
 
 export default function(){
 
-    const [balance , setBalance] = useState<{
-        amount : number,
-        locked : number
-    }>({
-        amount : 0,
-        locked : 0
-    });
+    const balance = useRecoilValue(BalanceData);
+    const transaction = useRecoilValue(PendingOnRampTxn);
 
-    const onRampCheck = useRecoilValue(onRampTxn);
-
-    const [transaction , setTransaction] = useState<{
-        amount: number;
-        Provider: string;
-        Status: string;
-        StartTime: Date;
-    }[]>([])
-
-    const numberToShow = 3;
-
-    useEffect(()=>{
-        UserBalance().then((res)=>{
-            if(res) setBalance(res);
-        })
-    } , [])
-
-    useEffect(()=>{
-
-        UserOnRampTransaction(numberToShow).then((res)=>{
-            if(res) setTransaction(res)
-        })
-
-    } , [onRampCheck])
-
+    const isLoading = useRecoilValue(isLoadingPendingOnRamp);
 
     return(
         <div className="p-4 w-full flex flex-col gap-10">
@@ -59,12 +29,24 @@ export default function(){
                 <div>
                     <div>
                         <Card title="Balance">
+                            {balance.amount < 0 ? <div className="flex flex-col gap-2">
+                        <Loader classname="w-full p-4"/>
+                        <Loader classname="w-full p-4"/>
+                        <Loader classname="w-full p-4"/>
+                    </div> : 
                             <Balance amount={balance?.amount || 0} locked= {balance?.locked || 0} decimal={1} />    
-                        </Card>   
+                            }
+                            </Card>   
                     </div>    
                     <div>
                     <Card title="Pending Transaction">
+                        {isLoading ? <div className="flex flex-col gap-2">
+                        <Loader classname="w-full"/>
+                        <Loader classname="w-full"/>
+                        <Loader classname="w-full"/>
+                    </div> : 
                         <Transaction classname="" label={"No Pending Transaction"} transaction={transaction} />    
+                        }
                     </Card>      
                     </div>    
                 </div>    

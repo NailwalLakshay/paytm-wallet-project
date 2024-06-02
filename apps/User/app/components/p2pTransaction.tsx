@@ -1,8 +1,8 @@
 "use client"
 
-import { Card } from "@repo/ui/card";
-import { useEffect, useState } from "react";
-import { UserDetails } from "../lib/helpers/helperfxn";
+
+import { useRecoilValue } from "recoil";
+import { UserDetailsStore } from "../store/recoil";
 
 const checkStatusIcon = ( status : string )=>{
 
@@ -28,7 +28,7 @@ const checkStatusIcon = ( status : string )=>{
 }
 
 
-export const P2P_Transaction = ({transaction , label , classname} : {
+export const P2P_Transaction = ({transaction , label , classname , flag} : {
     transaction : {
         id: number;
         startDate: Date;
@@ -38,26 +38,20 @@ export const P2P_Transaction = ({transaction , label , classname} : {
         status: string
     }[],
     label : string,
-    classname? : string
+    classname? : string,
+    flag? : boolean
 })=>{
 
-    const [userId , setUserId] = useState(0);
+    const userId = useRecoilValue(UserDetailsStore).id;
 
-    useEffect(()=>{
-        UserDetails().then((res)=>{
-            if(res)
-                setUserId(res.id);
-        })
-    })
+    if(transaction.length == 0){
+        return <div>
+                {label}
+            </div>
+    }
 
     return (
         <div className="flex flex-col gap-4">
-            <Card title="Recent P2P Transfers">
-            {(transaction.length == 0) ? 
-            <div>
-                {label}
-            </div>
-            :
 
             <div className={`${classname}`} >
                 
@@ -73,8 +67,6 @@ export const P2P_Transaction = ({transaction , label , classname} : {
                 </div>
                 })}
             </div>
-            }
-            </Card>
         </div>
     )
 }

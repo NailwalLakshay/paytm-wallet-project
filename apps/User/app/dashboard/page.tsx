@@ -1,33 +1,43 @@
+"use client";
+
 import { Card } from "@repo/ui/card";
-import { UserBalance , UserDetails } from "../lib/helpers/helperfxn";
+import { useRecoilValue } from "recoil";
+import { BalanceData, UserDetailsStore } from "../store/recoil";
+import { Loader } from "../components/loader";
 
-export default async function (){
+export default function (){
 
-    const Balance = await UserBalance();
-    const getUser = await UserDetails();
+    const Balance = useRecoilValue(BalanceData);
+    const user = useRecoilValue(UserDetailsStore);
 
     return(
         <div className="p-4 flex flex-col gap-10 mt-10 ">
+            
             <div>
                 <h1 className="font-bold text-4xl mt-10 text-blue-500">Paytm@IIT Dashboard</h1>
             </div>
             <div className="grid md:grid-cols-2 grid-cols-1 gap-4 ">
-                <Card title="Available Balance " classname="bg-gray-200 rounded-lg">
-                    <div>
+                <Card title="Available Balance " classname="bg-gray-100 rounded-lg md:min-w-[400px]">
+                 {Balance?.amount >=0 ?   <div>
                         Rs {Balance?.amount}
-                    </div>
+                    </div>:
+                    <Loader classname="w-full"/>}
+                
                 </Card>
-                <Card title="Account Details" classname="bg-gray-200 rounded-lg">
+                <Card title="Account Details" classname="bg-gray-100 rounded-lg md:min-w-[400px]">
+                
                     <div>
                         <h1 className="flex flex-col">
                         <p className="font-semibold">Account Number</p>
-                        {getUser?.accountNumber}
+                        { user?.accountNumber !== "" ? 
+                        <p>{user?.accountNumber}</p> : <Loader classname="w-full" />}
                         </h1>
                         <h1 className="flex flex-col">
                             <p className="font-semibold">Email Id</p>
-                            {getUser?.email}
+                            {user?.email !== "" ? user?.email : <Loader classname="w-full"/>}
                         </h1>
                     </div>
+                
                 </Card>
             </div>
         </div>

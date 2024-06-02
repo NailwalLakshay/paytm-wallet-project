@@ -5,7 +5,7 @@ import cors from "cors";
 
 const app = express();
 app.use(cors({
-    origin : "https://bankwebhook.lakshaynailwaldevs.top",
+    origin : ["https://bankwebhook.lakshaynailwaldevs.top" , "http://localhost:2000"],
     methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
@@ -14,6 +14,11 @@ app.set("view engine" , "ejs")
 
 app.get("/" , async (req,res)=>{
     const token = req.query.token?.toString() ||  "";
+    
+    if(token == ""){
+        return res.json({message : "Invalid Access" , status : 400});
+    }
+
     try {
         const userEntry = await prisma.token.findFirst({
             where : {
@@ -50,6 +55,7 @@ app.post("/genToken" , async(req,res)=>{
         res.status(500).json({error : "Internal Server Error" , status : 500});
     }
 })
+
 
 app.listen(4000 , ()=>{
     console.log("Server is running on port 4000")

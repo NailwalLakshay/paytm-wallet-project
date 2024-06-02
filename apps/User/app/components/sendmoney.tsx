@@ -7,7 +7,7 @@ import { useState } from "react"
 import { P2P_Transfer } from "../lib/actions/p2pTransfer"
 import toast from "react-hot-toast"
 import { useRecoilState } from "recoil"
-import { p2pRecentTransactionFactor } from "../store/recoil"
+import { BalanceToggler} from "../store/recoil"
 import { p2pTransferSchema } from "@repo/zodtypes/types"
 
 export const SendMoney = ()=>{
@@ -15,14 +15,14 @@ export const SendMoney = ()=>{
     const [toUser , setToUser] = useState("");
     const [amount , setAmount] = useState(0);
 
-    const [test , setTest] = useRecoilState(p2pRecentTransactionFactor)
+    const [p2pToogle , setP2pToogle] = useRecoilState(BalanceToggler);
 
     return (
         <div className="w-full">
             <Card title="Send Money">
                 <div className="">
 
-                    <TextInput type="string" label="Email" placeholder="Account Number" onChange={(value)=>{
+                    <TextInput type="string" label="Account Number" placeholder="Account Number" onChange={(value)=>{
                         setToUser(value)
                     }}/>
 
@@ -48,7 +48,7 @@ export const SendMoney = ()=>{
                             else {
                                 toast.error(`${response.message}`,{duration : 2000});
                             }
-                            setTest(!test);
+                            setP2pToogle(!p2pToogle);
                         });
                     }} className="bg-black mt-2 text-white p-2 rounded-lg">Proceed</Button>
                 </div>

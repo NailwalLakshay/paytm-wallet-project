@@ -8,7 +8,7 @@ export const AppBar =  ()=>{
     const session = useSession();
     const [active, setActive] = useRecoilState(BtnToggler);
     return (
-        <div className="p-4 flex justify-between border-b-2 items-center">
+        <div id="top" className="p-4 flex justify-between border-b-2 items-center">
             <h1 className="text-xl font-bold text-blue-500">PayTM@IIT</h1>
             {
                 session.data?.user ? 

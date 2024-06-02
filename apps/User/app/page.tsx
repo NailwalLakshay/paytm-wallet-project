@@ -13,9 +13,9 @@ export default async function Page() {
   return (
     <div className="flex flex-col md:max-w-[90%] md:m-auto">
       <main className="flex-1">
-        <section className="w-full p-4">
+        <section className="w-full p-4  mt-10">
           <div className="container -4 md:-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400] lg:gap-12 xl:grid-cols-[1fr_600]">
+            <div className="grid gap-6 lg:grid-cols-2 grid-cols-1">
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none">
@@ -27,12 +27,10 @@ export default async function Page() {
                   </p>
                 </div>
               </div>
-              <img
+              <img 
                 src="https://cdni.iconscout.com/illustration/premium/thumb/online-money-transfer-from-wallet-to-bank-2246210-1939259.png"
-                width="550"
-                height="550"
                 alt="Paytm Wallet"
-                className="mx-auto  aspect-video overflow-hidden rounded-xl object-cover sm:w-full lg:order-last lg:aspect-square"
+                className="mx-auto overflow-hidden rounded-xl object-cover sm:w-[500px] sm:h-[500px] w-full"
               />
             </div>
           </div>

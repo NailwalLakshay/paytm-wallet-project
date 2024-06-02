@@ -27,8 +27,8 @@ export default function(){
 
     return(
 
-        <div className="grid place-items-center">
-            <Card classname="sm:min-w-[500px] md:min-w-[700px] border" title="SignUp or Login">
+        <div className="grid min-h-[80vh] place-items-center  ">
+            <Card classname="sm:w-[500px] md:w-[700px] w-[300px] p-10 border" title="SignUp or Login">
                 <div className="flex flex-col gap-4">
                     <TextInput type="email" label="Email" placeholder="Enter your email" onChange={(value)=>{
                         setEmail(value);
